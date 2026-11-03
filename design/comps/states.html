@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Component states · Field Guide comps</title>
+<style>
+@font-face{font-family:"Archivo Variable";font-style:normal;font-display:swap;font-weight:100 900;font-stretch:62% 125%;src:url(fonts/archivo-latin-wdth-normal.woff2) format("woff2-variations")}
+@font-face{font-family:"Archivo Variable";font-style:italic;font-display:swap;font-weight:100 900;src:url(fonts/archivo-latin-wght-italic.woff2) format("woff2-variations")}
+@font-face{font-family:"Red Hat Mono Variable";font-style:normal;font-display:swap;font-weight:300 700;src:url(fonts/red-hat-mono-latin-wght-normal.woff2) format("woff2-variations")}
+:root{
+  --board:#E4E8E1;--sheet:#FCFCFA;--ink:#15191B;--ink-2:#4A524E;--rule:#D3D9D1;--edge:#737D76;
+  --stamp:#4A3A92;--stamp-soft:#E9E5F6;--on-stamp:#FFFFFF;
+  --redlist:#B3261E;--introduced:#8A5A00;--endemic:#1F5E8C;
+  --cover-asia:#9B2F2A;--cover-africa:#8A5A12;--cover-europe:#1F4E79;--cover-namerica:#1E5E5E;--cover-samerica:#6B3466;--cover-oceania:#0E5F86;--cover-antarctica:#3E4A52;--cover-neutral:#3E4A52;
+  --shadow-sheet:0 1px 2px rgb(21 25 27 / .08),0 3px 10px -2px rgb(21 25 27 / .10);
+  --shadow-lift:0 2px 4px rgb(21 25 27 / .10),0 10px 24px -6px rgb(21 25 27 / .18);
+  --font-sans:"Archivo Variable",ui-sans-serif,system-ui,sans-serif;
+  --font-mono:"Red Hat Mono Variable",ui-monospace,"SF Mono",Menlo,monospace;
+  --r-sheet:3px;--r-control:6px;--r-chip:999px;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --board:#101312;--sheet:#191D1B;--ink:#E6EAE5;--ink-2:#A3ADA6;--rule:#2C332F;--edge:#6B756F;
+  --stamp:#B3A6F2;--stamp-soft:#2A2448;--on-stamp:#15122B;
+  --redlist:#FF8A80;--introduced:#E3B45C;--endemic:#8CC4EE;
+  --cover-asia:#7E2622;--cover-africa:#6F4A0F;--cover-europe:#1A4066;--cover-namerica:#184D4D;--cover-samerica:#572A53;--cover-oceania:#0B4E6E;--cover-antarctica:#333D44;--cover-neutral:#333D44;
+  --shadow-sheet:0 1px 2px rgb(0 0 0 / .4),0 3px 10px -2px rgb(0 0 0 / .45);
+  --shadow-lift:0 2px 4px rgb(0 0 0 / .45),0 10px 24px -6px rgb(0 0 0 / .6);
+}}
+:root[data-theme=dark]{
+  --board:#101312;--sheet:#191D1B;--ink:#E6EAE5;--ink-2:#A3ADA6;--rule:#2C332F;--edge:#6B756F;
+  --stamp:#B3A6F2;--stamp-soft:#2A2448;--on-stamp:#15122B;
+  --redlist:#FF8A80;--introduced:#E3B45C;--endemic:#8CC4EE;
+  --cover-asia:#7E2622;--cover-africa:#6F4A0F;--cover-europe:#1A4066;--cover-namerica:#184D4D;--cover-samerica:#572A53;--cover-oceania:#0B4E6E;--cover-antarctica:#333D44;--cover-neutral:#333D44;
+  --shadow-sheet:0 1px 2px rgb(0 0 0 / .4),0 3px 10px -2px rgb(0 0 0 / .45);
+  --shadow-lift:0 2px 4px rgb(0 0 0 / .45),0 10px 24px -6px rgb(0 0 0 / .6);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--board);color:var(--ink);font-family:var(--font-sans);font-size:1rem;line-height:1.55;font-variation-settings:"wdth" 100;-webkit-font-smoothing:antialiased}
+::selection{background:var(--stamp);color:var(--on-stamp)}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-underline-offset:.2em;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--stamp);outline-offset:2px;border-radius:2px}
+h1,h2,h3{margin:0;line-height:1.1;text-wrap:balance;font-stretch:87%}
+p{margin:0}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:.92em;font-weight:500;letter-spacing:-.02em}
+.sci{font-style:italic;font-stretch:100%}
+.skip{position:absolute;left:12px;top:-60px;background:var(--stamp);color:var(--on-stamp);padding:10px 14px;border-radius:var(--r-control);z-index:10;font-weight:600}
+.skip:focus{top:12px}
+.wrap{width:100%;max-width:1280px;margin-inline:auto;padding-inline:16px}
+@media (min-width:768px){.wrap{padding-inline:32px}}
+.icon{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+/* site header */
+.site-head{border-bottom:1px solid var(--rule);background:var(--board)}
+.site-head .wrap{display:flex;align-items:center;justify-content:space-between;min-height:60px;gap:12px}
+.mark{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-stretch:87%;font-size:1.125rem;letter-spacing:-.01em;min-height:44px}
+.mark svg{width:28px;height:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border-radius:var(--r-control);border:1px solid var(--edge);background:var(--sheet);color:var(--ink);font:inherit;font-weight:600;font-size:.9375rem;text-decoration:none;cursor:pointer}
+.btn:hover{background:var(--board);border-color:var(--ink)}
+.btn-primary{background:var(--stamp);border-color:var(--stamp);color:var(--on-stamp)}
+.btn-primary:hover{background:var(--stamp);filter:brightness(1.12)}
+.btn-ghost{border-color:transparent;background:transparent}
+.btn-ghost:hover{background:var(--sheet);border-color:var(--rule)}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* micro label: field names on specimen labels */
+.field{font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-stretch:100%}
+/* footer */
+.site-foot{margin-top:72px;border-top:1px solid var(--rule);padding-block:32px 40px;font-size:.875rem;color:var(--ink-2)}
+.site-foot .wrap{display:grid;gap:20px}
+.site-foot nav ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 20px}
+.site-foot a{color:var(--ink)}
+.site-foot nav a{display:inline-flex;min-height:44px;align-items:center}
+.site-foot .fine{max-width:68ch}
+@media (min-width:1024px){.site-foot .wrap{grid-template-columns:1fr auto;align-items:start}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+.board{padding-block:24px 48px;display:grid;gap:40px}
+.board > section > h2{font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:16px}
+.pair{display:grid;gap:24px}
+@media (min-width:1024px){.pair{grid-template-columns:1fr 1fr}}
+.cap{font-size:.8125rem;color:var(--ink-2);margin-bottom:8px}
+/* combobox */
+.combo{position:relative;display:flex;align-items:center;background:var(--sheet);border:1px solid var(--edge);border-radius:var(--r-control);box-shadow:var(--shadow-sheet);outline:2px solid var(--stamp);outline-offset:2px}
+.combo .icon{margin-left:16px;color:var(--ink-2)}
+.combo input{flex:1;min-width:0;height:56px;border:0;background:transparent;font:inherit;font-size:1.125rem;color:var(--ink);padding:0 8px 0 12px;outline:none}
+.combo .clear{min-width:44px;min-height:44px;border:0;background:none;color:var(--ink-2);display:grid;place-items:center;margin-right:6px;border-radius:var(--r-control);cursor:pointer}
+.lb{list-style:none;margin:8px 0 0;padding:6px;background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r-control);box-shadow:var(--shadow-lift)}
+.lb li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:10px 12px;border-radius:4px;min-height:56px;cursor:pointer}
+.lb li[aria-selected=true]{background:var(--stamp-soft)}
+.lb .n{font-weight:650}
+.lb .n mark{background:none;color:inherit;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.lb .w{grid-column:1;font-size:.875rem;color:var(--ink-2)}
+.lb .cc{grid-column:2;grid-row:1/3;align-self:center;font-family:var(--font-mono);font-size:.8125rem;font-weight:600;border:1px solid var(--edge);border-radius:2px;padding:2px 6px}
+.lb .msg{display:block;min-height:0;padding:14px 12px;color:var(--ink-2);cursor:default}
+.lb .msg b{color:var(--ink)}
+/* skeleton */
+.grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (min-width:1024px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}}
+.sk{background:var(--sheet);border-radius:var(--r-sheet);box-shadow:var(--shadow-sheet)}
+.sk .ph{aspect-ratio:1;background:var(--rule)}
+.sk .l{padding:12px;display:grid;gap:8px;border-top:1px solid var(--rule)}
+.sk .bar{height:12px;border-radius:2px;background:var(--rule)}
+.sk .bar.w60{width:60%}.sk .bar.w80{width:80%}.sk .bar.w30{width:30%;margin-top:6px}
+@media (prefers-reduced-motion:no-preference){.sk .ph,.sk .bar{animation:breathe 1.6s ease-in-out infinite}}
+@keyframes breathe{50%{opacity:.55}}
+/* state labels */
+.state{background:var(--sheet);border-radius:var(--r-sheet);box-shadow:var(--shadow-sheet);padding:20px;display:grid;gap:12px;max-width:640px}
+.state h3{font-size:1.375rem;font-weight:700;letter-spacing:-.015em}
+.state p{color:var(--ink-2);max-width:56ch}
+.state .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.state.err{border-top:3px solid var(--redlist)}
+.state.empty .void{border:1.5px dashed var(--edge);border-radius:2px;padding:14px;color:var(--ink-2);font-size:.875rem}
+/* toast */
+.toast{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;background:var(--ink);color:var(--board);border-radius:var(--r-control);box-shadow:var(--shadow-lift);font-weight:550}
+.toast .icon{width:18px;height:18px}
+/* buttons states */
+.btnrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn.is-hover{background:var(--board);border-color:var(--ink)}
+.btn.is-focus{outline:2px solid var(--stamp);outline-offset:2px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn .spin{width:18px;height:18px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%}
+@media (prefers-reduced-motion:no-preference){.btn .spin{animation:spin .8s linear infinite}}
+@keyframes spin{to{transform:rotate(1turn)}}
+.chip{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:var(--r-chip);border:1px solid var(--edge);background:var(--sheet);font-size:.9375rem;font-weight:550}
+.chip.on{background:var(--stamp);border-color:var(--stamp);color:var(--on-stamp)}
+.chip.focus{outline:2px solid var(--stamp);outline-offset:2px}
+.chip.hover{border-color:var(--ink)}
+</style>
+</head>
+<body>
+<main id="main" class="wrap board">
+  <section>
+    <h2>City combobox</h2>
+    <div class="pair">
+      <div>
+        <p class="cap">Open, typed “la paz”, second option active (arrow key)</p>
+        <div class="combo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input value="La Paz" role="combobox" aria-expanded="true" aria-controls="lb1" aria-activedescendant="o2" aria-label="City"><button class="clear" aria-label="Clear"><svg class="icon" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
+        <ul class="lb" id="lb1" role="listbox" aria-label="Cities">
+          <li role="option" id="o1" aria-selected="false"><span class="n"><mark>La Paz</mark></span><span class="w">Baja California Sur, Mexico · 250K people</span><span class="cc">MX</span></li>
+          <li role="option" id="o2" aria-selected="true"><span class="n"><mark>La Paz</mark></span><span class="w">La Paz Department, Bolivia · 2.0M people</span><span class="cc">BO</span></li>
+          <li role="option" id="o3" aria-selected="false"><span class="n"><mark>La Paz</mark></span><span class="w">La Paz Department, Honduras · 18K people</span><span class="cc">HN</span></li>
+          <li role="option" id="o4" aria-selected="false"><span class="n"><mark>La Paz</mark></span><span class="w">Central Luzon, Philippines · 72K people</span><span class="cc">PH</span></li>
+        </ul>
+      </div>
+      <div style="display:grid;gap:20px;align-content:start">
+        <div>
+          <p class="cap">Searching (after 250 ms debounce)</p>
+          <ul class="lb" role="listbox"><li class="msg" role="option" aria-disabled="true">Looking up “Ulaan”…</li></ul>
+        </div>
+        <div>
+          <p class="cap">No match</p>
+          <ul class="lb" role="listbox"><li class="msg" role="option" aria-disabled="true">No city called <b>“Xqzt”</b>. Check the spelling, or try the nearest larger city.</li></ul>
+        </div>
+        <div>
+          <p class="cap">Lookup failed</p>
+          <ul class="lb" role="listbox"><li class="msg" role="option" aria-disabled="true">City search isn’t responding. Try again in a moment.</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Controls</h2>
+    <div class="btnrow" style="margin-bottom:12px">
+      <span class="chip">Birds</span><span class="chip hover">Birds (hover)</span><span class="chip focus">Birds (focus)</span><span class="chip on">Birds</span>
+    </div>
+    <div class="btnrow">
+      <button class="btn btn-primary">Search a city</button>
+      <button class="btn">Default</button>
+      <button class="btn is-hover">Hover</button>
+      <button class="btn is-focus">Focus</button>
+      <button class="btn" disabled>Disabled</button>
+      <button class="btn" aria-busy="true"><span class="spin" aria-hidden="true"></span>Loading</button>
+      <span class="toast" role="status"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Link copied</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Loading: filter, radius or page change (client side)</h2>
+    <ul class="grid" aria-busy="true" aria-label="Loading species">
+      <li class="sk"><div class="ph"></div><div class="l"><div class="bar w30"></div><div class="bar w80"></div><div class="bar w60"></div></div></li>
+      <li class="sk"><div class="ph"></div><div class="l"><div class="bar w30"></div><div class="bar w80"></div><div class="bar w60"></div></div></li>
+      <li class="sk"><div class="ph"></div><div class="l"><div class="bar w30"></div><div class="bar w80"></div><div class="bar w60"></div></div></li>
+      <li class="sk"><div class="ph"></div><div class="l"><div class="bar w30"></div><div class="bar w80"></div><div class="bar w60"></div></div></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Empty, error, rate-limited</h2>
+    <div class="pair">
+      <div class="state empty" role="status">
+        <h3>No fish on record here yet</h3>
+        <p>Nobody has shared a research-grade fish observation within 10&nbsp;km of Medan in November. Try a wider radius or any month.</p>
+        <div class="acts"><button class="btn btn-primary">Widen to 25 km</button><button class="btn">Show all months</button></div>
+      </div>
+      <div class="state err" role="alert">
+        <h3>iNaturalist is busy right now</h3>
+        <p>iNaturalist asked us to slow down. Your filters are kept; try again in a minute.</p>
+        <div class="acts"><button class="btn btn-primary"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>Try again</button></div>
+      </div>
+      <div class="state err" role="alert">
+        <h3>We couldn’t load these species</h3>
+        <p>The species list didn’t arrive. It’s usually brief. If it keeps happening, tell us on GitHub.</p>
+        <div class="acts"><button class="btn btn-primary">Try again</button><a class="btn" href="#">Report on GitHub</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Milky Stork (Mycteria cinerea) near Medan · Field Guide</title>
+<meta name="theme-color" content="#E4E8E1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101312" media="(prefers-color-scheme: dark)">
+<style>
+@font-face{font-family:"Archivo Variable";font-style:normal;font-display:swap;font-weight:100 900;font-stretch:62% 125%;src:url(fonts/archivo-latin-wdth-normal.woff2) format("woff2-variations")}
+@font-face{font-family:"Archivo Variable";font-style:italic;font-display:swap;font-weight:100 900;src:url(fonts/archivo-latin-wght-italic.woff2) format("woff2-variations")}
+@font-face{font-family:"Red Hat Mono Variable";font-style:normal;font-display:swap;font-weight:300 700;src:url(fonts/red-hat-mono-latin-wght-normal.woff2) format("woff2-variations")}
+:root{
+  --board:#E4E8E1;--sheet:#FCFCFA;--ink:#15191B;--ink-2:#4A524E;--rule:#D3D9D1;--edge:#737D76;
+  --stamp:#4A3A92;--stamp-soft:#E9E5F6;--on-stamp:#FFFFFF;
+  --redlist:#B3261E;--introduced:#8A5A00;--endemic:#1F5E8C;
+  --cover-asia:#9B2F2A;--cover-africa:#8A5A12;--cover-europe:#1F4E79;--cover-namerica:#1E5E5E;--cover-samerica:#6B3466;--cover-oceania:#0E5F86;--cover-antarctica:#3E4A52;--cover-neutral:#3E4A52;
+  --shadow-sheet:0 1px 2px rgb(21 25 27 / .08),0 3px 10px -2px rgb(21 25 27 / .10);
+  --shadow-lift:0 2px 4px rgb(21 25 27 / .10),0 10px 24px -6px rgb(21 25 27 / .18);
+  --font-sans:"Archivo Variable",ui-sans-serif,system-ui,sans-serif;
+  --font-mono:"Red Hat Mono Variable",ui-monospace,"SF Mono",Menlo,monospace;
+  --r-sheet:3px;--r-control:6px;--r-chip:999px;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --board:#101312;--sheet:#191D1B;--ink:#E6EAE5;--ink-2:#A3ADA6;--rule:#2C332F;--edge:#6B756F;
+  --stamp:#B3A6F2;--stamp-soft:#2A2448;--on-stamp:#15122B;
+  --redlist:#FF8A80;--introduced:#E3B45C;--endemic:#8CC4EE;
+  --cover-asia:#7E2622;--cover-africa:#6F4A0F;--cover-europe:#1A4066;--cover-namerica:#184D4D;--cover-samerica:#572A53;--cover-oceania:#0B4E6E;--cover-antarctica:#333D44;--cover-neutral:#333D44;
+  --shadow-sheet:0 1px 2px rgb(0 0 0 / .4),0 3px 10px -2px rgb(0 0 0 / .45);
+  --shadow-lift:0 2px 4px rgb(0 0 0 / .45),0 10px 24px -6px rgb(0 0 0 / .6);
+}}
+:root[data-theme=dark]{
+  --board:#101312;--sheet:#191D1B;--ink:#E6EAE5;--ink-2:#A3ADA6;--rule:#2C332F;--edge:#6B756F;
+  --stamp:#B3A6F2;--stamp-soft:#2A2448;--on-stamp:#15122B;
+  --redlist:#FF8A80;--introduced:#E3B45C;--endemic:#8CC4EE;
+  --cover-asia:#7E2622;--cover-africa:#6F4A0F;--cover-europe:#1A4066;--cover-namerica:#184D4D;--cover-samerica:#572A53;--cover-oceania:#0B4E6E;--cover-antarctica:#333D44;--cover-neutral:#333D44;
+  --shadow-sheet:0 1px 2px rgb(0 0 0 / .4),0 3px 10px -2px rgb(0 0 0 / .45);
+  --shadow-lift:0 2px 4px rgb(0 0 0 / .45),0 10px 24px -6px rgb(0 0 0 / .6);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--board);color:var(--ink);font-family:var(--font-sans);font-size:1rem;line-height:1.55;font-variation-settings:"wdth" 100;-webkit-font-smoothing:antialiased}
+::selection{background:var(--stamp);color:var(--on-stamp)}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-underline-offset:.2em;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--stamp);outline-offset:2px;border-radius:2px}
+h1,h2,h3{margin:0;line-height:1.1;text-wrap:balance;font-stretch:87%}
+p{margin:0}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:.92em;font-weight:500;letter-spacing:-.02em}
+.sci{font-style:italic;font-stretch:100%}
+.skip{position:absolute;left:12px;top:-60px;background:var(--stamp);color:var(--on-stamp);padding:10px 14px;border-radius:var(--r-control);z-index:10;font-weight:600}
+.skip:focus{top:12px}
+.wrap{width:100%;max-width:1280px;margin-inline:auto;padding-inline:16px}
+@media (min-width:768px){.wrap{padding-inline:32px}}
+.icon{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+/* site header */
+.site-head{border-bottom:1px solid var(--rule);background:var(--board)}
+.site-head .wrap{display:flex;align-items:center;justify-content:space-between;min-height:60px;gap:12px}
+.mark{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-stretch:87%;font-size:1.125rem;letter-spacing:-.01em;min-height:44px}
+.mark svg{width:28px;height:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border-radius:var(--r-control);border:1px solid var(--edge);background:var(--sheet);color:var(--ink);font:inherit;font-weight:600;font-size:.9375rem;text-decoration:none;cursor:pointer}
+.btn:hover{background:var(--board);border-color:var(--ink)}
+.btn-primary{background:var(--stamp);border-color:var(--stamp);color:var(--on-stamp)}
+.btn-primary:hover{background:var(--stamp);filter:brightness(1.12)}
+.btn-ghost{border-color:transparent;background:transparent}
+.btn-ghost:hover{background:var(--sheet);border-color:var(--rule)}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* micro label: field names on specimen labels */
+.field{font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-stretch:100%}
+/* footer */
+.site-foot{margin-top:72px;border-top:1px solid var(--rule);padding-block:32px 40px;font-size:.875rem;color:var(--ink-2)}
+.site-foot .wrap{display:grid;gap:20px}
+.site-foot nav ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 20px}
+.site-foot a{color:var(--ink)}
+.site-foot nav a{display:inline-flex;min-height:44px;align-items:center}
+.site-foot .fine{max-width:68ch}
+@media (min-width:1024px){.site-foot .wrap{grid-template-columns:1fr auto;align-items:start}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+.back{--c:var(--cover-asia);display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:16px;padding:0 14px 0 10px;background:var(--c);color:#fff;border-radius:6px;font-weight:600;font-size:.9375rem;text-decoration:none}
+.back:hover{filter:brightness(1.1)}
+.back .icon{width:18px;height:18px}
+.top{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;margin-top:16px}
+@media (min-width:1024px){.top{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;margin-top:24px;align-items:start}}
+/* gallery */
+.gallery{position:relative;margin-inline:-16px}
+@media (min-width:768px){.gallery{margin-inline:0}}
+.strip{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 16px 4px;scroll-padding-inline:16px;scrollbar-width:thin;scrollbar-color:var(--edge) transparent;list-style:none;margin:0}
+@media (min-width:768px){.strip{padding:0 0 4px;scroll-padding-inline:0}}
+.strip li{flex:0 0 86%;scroll-snap-align:start}
+@media (min-width:768px){.strip li{flex-basis:100%}}
+.strip figure{margin:0;background:var(--sheet);border-radius:var(--r-sheet);box-shadow:var(--shadow-sheet);padding:8px 8px 0}
+.strip img{width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--rule)}
+.strip figcaption{padding:8px 4px 10px;font-size:.875rem;font-weight:500;color:var(--ink)}
+.strip figcaption .cap{display:block;font-size:.6875rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.strip figcaption .n{font-family:var(--font-mono);flex:none}
+.gal-nav{display:none;align-items:center;justify-content:space-between;margin-top:8px}
+@media (min-width:768px){.gal-nav{display:flex}}
+.gal-nav .btns{display:flex;gap:8px}
+.gal-nav .btn{min-width:44px;padding:0}
+.gal-nav p{font-size:.875rem;color:var(--ink-2)}
+/* label column */
+.sheet{background:var(--sheet);border-radius:var(--r-sheet);box-shadow:var(--shadow-sheet);padding:20px}
+@media (min-width:1024px){.sheet{padding:28px}}
+.sheet h1{font-size:clamp(2.25rem,1.6rem + 3vw,3.5rem);font-weight:700;letter-spacing:-.03em;font-stretch:80%;line-height:.98}
+.sheet .sn{margin-top:6px;font-size:1.25rem;color:var(--ink-2)}
+.stamp{display:inline-grid;grid-template-columns:auto auto;align-items:center;gap:0;margin-top:20px;border:2px solid var(--redlist);color:var(--redlist);border-radius:2px;padding:2px}
+.stamp span{padding:6px 10px;border:1px solid var(--redlist)}
+.stamp .code{font-family:var(--font-mono);font-weight:700;border-right:0}
+.stamp .word{font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.875rem}
+.stamp-src{margin-top:6px;font-size:.8125rem;color:var(--ink-2)}
+.facts{margin:20px 0 0;display:grid;grid-template-columns:auto 1fr}
+.facts dt,.facts dd{margin:0;padding:10px 0;border-top:1px solid var(--rule)}
+.facts dt{padding-right:16px}
+.facts dd{font-weight:600}
+.facts .mono{font-size:1rem}
+.links{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.notice{margin-top:16px;padding:12px 14px;background:var(--board);border-radius:2px;font-size:.875rem;color:var(--ink-2)}
+/* reading sections */
+.body{display:grid;grid-template-columns:minmax(0,1fr);gap:40px;margin-top:40px}
+@media (min-width:1024px){.body{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;margin-top:56px}}
+.body h2{font-size:1.375rem;font-weight:650;letter-spacing:-.01em;margin-bottom:12px}
+.summary{font-size:1.0625rem;max-width:68ch}
+.summary p+p{margin-top:12px}
+.summary .src{margin-top:12px;font-size:.875rem;color:var(--ink-2)}
+.lineage{list-style:none;margin:0;padding:0;background:var(--sheet);border-radius:var(--r-sheet);box-shadow:var(--shadow-sheet)}
+.lineage li{display:grid;grid-template-columns:88px 1fr;gap:12px;padding:9px 16px;border-top:1px solid var(--rule)}
+.lineage li:first-child{border-top:0}
+.lineage .rank{font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);padding-top:3px}
+.lineage .nm{font-weight:600}
+.lineage .cm{font-size:.875rem;color:var(--ink-2)}
+.lineage li[aria-current]{background:var(--stamp-soft)}
+.lineage li[aria-current] .nm{color:var(--ink)}
+/* ledger */
+.ledger{margin-top:48px}
+.ledger h2{font-size:1.375rem;font-weight:650}
+.ledger .sub{margin-top:4px;color:var(--ink-2);font-size:.9375rem}
+table{width:100%;border-collapse:collapse;margin-top:16px;background:var(--sheet);border-radius:var(--r-sheet);box-shadow:var(--shadow-sheet);font-size:.9375rem}
+th{text-align:left;font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);padding:10px 16px;border-bottom:1px solid var(--edge)}
+td{padding:12px 16px;border-top:1px solid var(--rule);vertical-align:top}
+td.d{font-family:var(--font-mono);font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:500}
+td a{display:inline-flex;align-items:center;gap:6px;min-height:24px}
+@media (max-width:639px){
+  table,tbody,tr,td{display:block}
+  thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  tr{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:12px 16px;border-top:1px solid var(--rule)}
+  tr:first-child{border-top:0}
+  td{padding:0;border:0}
+  td.d{grid-column:1}
+  td.p{grid-column:1;color:var(--ink)}
+  td.o{grid-column:1;color:var(--ink-2);font-size:.875rem}
+  td.l{grid-column:2;grid-row:1/4;align-self:center}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap">
+    <a class="mark" href="home.html"><svg viewBox="0 0 512 512" aria-hidden="true" focusable="false"><rect width="512" height="512" rx="112" fill="var(--stamp)"/><g transform="translate(256 262) rotate(-14) translate(-150 -90)"><path d="M62 0H290a10 10 0 0 1 10 10V170a10 10 0 0 1-10 10H62L0 124V56Z" fill="var(--board)"/><circle cx="44" cy="90" r="17" fill="var(--stamp)"/><rect x="98" y="50" width="164" height="18" rx="4" fill="var(--stamp)"/><rect x="98" y="90" width="164" height="10" rx="3" fill="var(--stamp)" opacity=".55"/><rect x="98" y="120" width="104" height="10" rx="3" fill="var(--stamp)" opacity=".55"/></g></svg>
+<span>Field Guide</span></a>
+    <a class="btn btn-ghost" href="home.html"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span>Change city</span></a>
+  </div>
+</header>
+<main id="main" class="wrap">
+  <a class="back" href="place.html#t-4745"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>Back to Medan</a>
+
+  <div class="top">
+    <section class="gallery" aria-label="Photos">
+      <ul class="strip" tabindex="0" aria-label="Photos of Milky Stork, scroll sideways">
+        <li><figure><img src="https://inaturalist-open-data.s3.amazonaws.com/photos/181076647/medium.jpeg" width="500" height="375" alt="Milky Stork, photo 1 of 6"><figcaption><span><span class="cap">Photo 1 of 6</span>© Minder Singh, some rights reserved (CC BY-NC)</span></figcaption></figure></li>
+        <li><figure><img src="https://static.inaturalist.org/photos/31944339/medium.jpg" width="500" height="375" alt="Milky Stork, photo 2 of 6" loading="lazy"><figcaption><span><span class="cap">Photo 2 of 6</span>© Shiou Ming Lee, all rights reserved</span></figcaption></figure></li>
+        <li><figure><img src="https://static.inaturalist.org/photos/6272304/medium.jpg" width="500" height="375" alt="Milky Stork, photo 3 of 6" loading="lazy"><figcaption><span><span class="cap">Photo 3 of 6</span>© Matt Brady, all rights reserved</span></figcaption></figure></li>
+        <li><figure><img src="https://inaturalist-open-data.s3.amazonaws.com/photos/3927671/medium.jpeg" width="500" height="375" alt="Milky Stork, photo 4 of 6" loading="lazy"><figcaption><span><span class="cap">Photo 4 of 6</span>© Farits Alhadi, some rights reserved (CC BY-NC)</span></figcaption></figure></li>
+        <li><figure><img src="https://static.inaturalist.org/photos/29900695/medium.jpg" width="500" height="375" alt="Milky Stork, photo 5 of 6" loading="lazy"><figcaption><span><span class="cap">Photo 5 of 6</span>© kierank, all rights reserved</span></figcaption></figure></li>
+        <li><figure><img src="https://inaturalist-open-data.s3.amazonaws.com/photos/10361625/medium.jpeg" width="500" height="375" alt="Milky Stork, photo 6 of 6" loading="lazy"><figcaption><span><span class="cap">Photo 6 of 6</span>© Catalina Tong, some rights reserved (CC BY-NC)</span></figcaption></figure></li>
+      </ul>
+      <div class="gal-nav">
+        <p><span class="mono">1</span> of <span class="mono">6</span> photos</p>
+        <div class="btns">
+          <button class="btn" type="button" aria-label="Previous photo" disabled style="opacity:.45"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></button>
+          <button class="btn" type="button" aria-label="Next photo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="sheet" aria-labelledby="h1">
+      <h1 id="h1">Milky Stork</h1>
+      <p class="sn sci" lang="la">Mycteria cinerea</p>
+      <p class="stamp"><span class="code">EN</span><span class="word">Endangered</span></p>
+      <p class="stamp-src">IUCN Red List status</p>
+      <dl class="facts">
+        <dt>Near Medan</dt><dd><span class="mono">6</span> observations within 25&nbsp;km</dd>
+        <dt>Worldwide</dt><dd><span class="mono">1,193</span> observations</dd>
+        <dt>Group</dt><dd>Birds</dd>
+      </dl>
+      <p class="notice">iNaturalist hides the exact location of threatened species, so a sighting can sit several kilometres from the point shown on its record.</p>
+      <div class="links">
+        <a class="btn btn-primary" href="https://www.inaturalist.org/taxa/4745">iNaturalist<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a>
+        <a class="btn" href="https://en.wikipedia.org/wiki/Milky_stork">Wikipedia<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a>
+        <button class="btn btn-ghost" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>Share</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="body">
+    <section class="summary" aria-labelledby="h-about">
+      <h2 id="h-about">About</h2>
+      <p>The <b>milky stork</b> (<i lang="la">Mycteria cinerea</i>) is a medium, almost completely white plumaged stork species found predominantly in coastal mangroves in parts of Southeast Asia.</p>
+      <p class="src">Summary from <a href="https://en.wikipedia.org/wiki/Milky_stork">Wikipedia</a>, CC BY-SA 4.0.</p>
+    </section>
+    <nav aria-labelledby="h-lineage">
+      <h2 id="h-lineage">Lineage</h2>
+      <ol class="lineage">
+        <li><span class="rank">kingdom</span><span><span class="nm">Animalia</span> <span class="cm">Animals</span></span></li>
+        <li><span class="rank">phylum</span><span><span class="nm">Chordata</span> <span class="cm">Chordates</span></span></li>
+        <li><span class="rank">class</span><span><a class="nm" href="#">Aves</a> <span class="cm">Birds</span></span></li>
+        <li><span class="rank">order</span><span><span class="nm">Ciconiiformes</span> <span class="cm">Storks</span></span></li>
+        <li><span class="rank">family</span><span><span class="nm">Ciconiidae</span> <span class="cm">Storks</span></span></li>
+        <li><span class="rank">genus</span><span><span class="nm sci" lang="la">Mycteria</span> <span class="cm">Mycteria storks</span></span></li>
+        <li aria-current="page"><span class="rank">species</span><span><span class="nm sci" lang="la">Mycteria cinerea</span> <span class="cm">Milky Stork</span></span></li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="ledger" aria-labelledby="h-ledger">
+    <h2 id="h-ledger">Recent sightings near Medan</h2>
+    <p class="sub">Research-grade observations within 25&nbsp;km, newest first.</p>
+    <table>
+      <thead><tr><th scope="col">Date</th><th scope="col">Place</th><th scope="col">Observer</th><th scope="col"><span class="vh">Record</span></th></tr></thead>
+      <tbody>
+        <tr><td class="d">13 May 2026</td><td class="p">Sumatera Utara, ID</td><td class="o">Indra Kusuma</td><td class="l"><a href="https://www.inaturalist.org/observations/361109972">View<span class="vh"> observation from 13 May 2026 on iNaturalist</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a></td></tr>
+        <tr><td class="d">14 Jan 2020</td><td class="p">Sumatera Utara, ID</td><td class="o">Sze On, Ng (Aaron)</td><td class="l"><a href="https://www.inaturalist.org/observations/225477398">View<span class="vh"> observation from 14 January 2020 on iNaturalist</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a></td></tr>
+        <tr><td class="d">14 Jan 2020</td><td class="p">No place name given</td><td class="o">Sze On, Ng (Aaron)</td><td class="l"><a href="https://www.inaturalist.org/observations/231970914">View<span class="vh"> observation from 14 January 2020 on iNaturalist</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a></td></tr>
+        <tr><td class="d">8 Jan 2015</td><td class="p">Sumatera Utara, ID</td><td class="o">chairunasadhaputra_nchay</td><td class="l"><a href="https://www.inaturalist.org/observations/15996458">View<span class="vh"> observation from 8 January 2015 on iNaturalist</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a></td></tr>
+        <tr><td class="d">10 Dec 2012</td><td class="p">Sumatera Utara, ID</td><td class="o">Bert Harris</td><td class="l"><a href="https://www.inaturalist.org/observations/65271504">View<span class="vh"> observation from 10 December 2012 on iNaturalist</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a></td></tr>
+        <tr><td class="d">19 Mar 2011</td><td class="p">Sumatera Utara, ID</td><td class="o">Matt Brady</td><td class="l"><a href="https://www.inaturalist.org/observations/5102380">View<span class="vh"> observation from 19 March 2011 on iNaturalist</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a></td></tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="fine">
+      <p><strong style="color:var(--ink)">Field Guide</strong> is a portfolio project by Syailendra Ginting. Species, counts and photos come from <a href="https://www.inaturalist.org">iNaturalist</a> research-grade observations; every photo belongs to the person credited under it. City search by <a href="https://open-meteo.com">Open-Meteo</a> with <a href="https://www.geonames.org">GeoNames</a> data (CC BY 4.0).</p>
+    </div>
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="credits.html">Credits</a></li>
+        <li><a href="legal.html">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Accessibility</a></li>
+        <li><a href="https://github.com/sg208/fieldguide">Source on GitHub</a></li>
+        <li><a href="https://github.com/sg208/fieldguide/blob/main/LICENSE">MIT licence</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
