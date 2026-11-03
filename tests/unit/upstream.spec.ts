@@ -45,11 +45,34 @@ describe('fetchJson', () => {
     );
   });
 
-  it('maps 429 to RateLimitedError', async () => {
-    vi.stubGlobal('fetch', async () => jsonResponse({}, 429));
-    await expect(fetchJson('https://example.test/x')).rejects.toBeInstanceOf(
-      RateLimitedError
-    );
+  it('retries a 429 once and returns the second answer', async () => {
+    vi.useFakeTimers();
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(jsonResponse({}, 429))
+      .mockResolvedValueOnce(jsonResponse({ ok: true }));
+    vi.stubGlobal('fetch', fetchMock);
+
+    const pending = fetchJson<{ ok: boolean }>('https://example.test/x');
+    await vi.runAllTimersAsync();
+
+    await expect(pending).resolves.toEqual({ ok: true });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    vi.useRealTimers();
+  });
+
+  it('maps a second 429 to RateLimitedError', async () => {
+    vi.useFakeTimers();
+    const fetchMock = vi.fn(async () => jsonResponse({}, 429));
+    vi.stubGlobal('fetch', fetchMock);
+
+    const pending = fetchJson('https://example.test/x');
+    const assertion = expect(pending).rejects.toBeInstanceOf(RateLimitedError);
+    await vi.runAllTimersAsync();
+
+    await assertion;
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    vi.useRealTimers();
   });
 
   it('maps other failures to UpstreamError with the status', async () => {

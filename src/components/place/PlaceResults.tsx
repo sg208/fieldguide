@@ -7,6 +7,7 @@ import type { FilterPatch } from '../FilterBar';
 import { Pagination } from '../Pagination';
 import { SpeciesGrid } from '../SpeciesGrid';
 import { EmptyState, ErrorState, groupLabel, monthLabel } from './ResultStates';
+import { isRateLimited } from '../../lib/rateLimit';
 
 const PER_PAGE = 30;
 const LIST_CAP = 300;
@@ -16,12 +17,6 @@ type Props = {
   search: PlaceSearch;
   onFilter: (patch: FilterPatch) => void;
 };
-
-// Server functions serialise errors without their class, so match the name or
-// the default message of RateLimitedError (src/server/errors.ts).
-const isRateLimited = (error: Error | null): boolean =>
-  error?.name === 'RateLimitedError' ||
-  /rate limit/i.test(error?.message ?? '');
 
 /** Results region: heading, live count, grid or state block, pager. */
 export const PlaceResults = ({ place, search, onFilter }: Props): ReactNode => {
