@@ -42,11 +42,13 @@ const PrivacyPage = (): ReactNode => (
       </li>
     </ul>
     <p>
-      These requests come from our server, not from your browser, so Open-Meteo
-      and iNaturalist do not see your IP address for them. Photos are the
-      exception: they load directly from iNaturalist’s image servers
-      (inaturalist-open-data.s3.amazonaws.com and static.inaturalist.org), which
-      see your IP address.
+      These requests normally come from our server, not from your browser, so
+      Open-Meteo and iNaturalist do not see your IP address for them. There are
+      two exceptions. Photos load directly from iNaturalist’s image servers
+      (inaturalist-open-data.s3.amazonaws.com and static.inaturalist.org). And
+      when iNaturalist is too busy to answer our server, your browser sends the
+      same species request to api.inaturalist.org itself. Both see your IP
+      address.
     </p>
     <h2>Hosting</h2>
     <p>
