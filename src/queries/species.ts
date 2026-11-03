@@ -1,8 +1,15 @@
 import { queryOptions, type UseQueryOptions } from '@tanstack/react-query';
-import type { GroupKey } from '../lib/groups';
+import { withBrowserFallback } from '../lib/browserFallback';
+import { groupToIconicTaxa, type GroupKey } from '../lib/groups';
+import {
+  browserSightings,
+  browserSpeciesCounts,
+  browserTaxon,
+} from '../lib/inatBrowser';
 import type { Radius } from '../lib/validation';
 import type { SpeciesListInput } from '../server/fns';
 import {
+  getPlaceFn,
   getSightingsFn,
   getSpeciesCountsFn,
   getTaxonFn,
@@ -33,7 +40,21 @@ export const speciesListQuery = (
       input.month ?? null,
       input.page,
     ] as const,
-    queryFn: () => getSpeciesCountsFn({ data: input }),
+    queryFn: () =>
+      withBrowserFallback(
+        () => getSpeciesCountsFn({ data: input }),
+        async () => {
+          const place = await getPlaceFn({ data: { placeId: input.placeId } });
+          return browserSpeciesCounts({
+            lat: place.latitude,
+            lng: place.longitude,
+            radius: input.radius,
+            iconicTaxa: groupToIconicTaxa(input.group),
+            month: input.month,
+            page: input.page,
+          });
+        }
+      ),
     staleTime: SPECIES_STALE_MS,
   });
 
@@ -47,7 +68,11 @@ export const taxonQuery = (
 > =>
   queryOptions({
     queryKey: ['taxon', taxonId] as const,
-    queryFn: () => getTaxonFn({ data: { taxonId } }),
+    queryFn: () =>
+      withBrowserFallback(
+        () => getTaxonFn({ data: { taxonId } }),
+        () => browserTaxon(taxonId)
+      ),
     staleTime: TAXON_STALE_MS,
   });
 
@@ -66,6 +91,18 @@ export const sightingsQuery = (
       input.placeId,
       input.radius,
     ] as const,
-    queryFn: () => getSightingsFn({ data: input }),
+    queryFn: () =>
+      withBrowserFallback(
+        () => getSightingsFn({ data: input }),
+        async () => {
+          const place = await getPlaceFn({ data: { placeId: input.placeId } });
+          return browserSightings({
+            taxonId: input.taxonId,
+            lat: place.latitude,
+            lng: place.longitude,
+            radius: input.radius,
+          });
+        }
+      ),
     staleTime: SPECIES_STALE_MS,
   });

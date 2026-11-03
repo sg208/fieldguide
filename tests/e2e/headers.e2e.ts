@@ -9,7 +9,7 @@ test('home carries the security headers', async ({ request }) => {
   }
   expect(headers['permissions-policy']).toContain('geolocation=(self)');
   const csp = headers['content-security-policy-report-only'] ?? '';
-  expect(csp).toContain("connect-src 'self'");
+  expect(csp).toContain("connect-src 'self' https://api.inaturalist.org");
   expect(csp).toContain('https://inaturalist-open-data.s3.amazonaws.com');
   expect(csp).toContain('https://static.inaturalist.org');
 });

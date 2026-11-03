@@ -24,7 +24,7 @@ describe('buildSecurityHeaders', () => {
     expect(headers).not.toHaveProperty('Content-Security-Policy');
     const csp = headers['Content-Security-Policy-Report-Only'];
     expect(csp).toContain("default-src 'self'");
-    expect(csp).toContain("connect-src 'self'");
+    expect(csp).toContain("connect-src 'self' https://api.inaturalist.org");
     expect(csp).toContain(
       "img-src 'self' data: https://inaturalist-open-data.s3.amazonaws.com https://static.inaturalist.org"
     );

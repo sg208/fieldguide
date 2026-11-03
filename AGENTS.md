@@ -67,7 +67,8 @@ pnpm run deploy       # pnpm build && wrangler deploy (from main only; CLOUDFLAR
 - `rtk` output filtering can hide vitest/eslint/prettier results — use `rtk proxy …` or `./node_modules/.bin/vitest` for authoritative output
 - Edge cache stores mapped objects: bump `CACHE_SCHEMA` (`src/server/edgeCache.ts`) on any mapped-shape change (`.enggflo/learning.md` edge-cache-schema-version)
 - iNat taxon `conservation_status.status` is the IUCN code (`EN`); `geoprivacy` `obscured|private` drives the hidden-location note
-- Server errors lose their class over server-fn serialization; rate-limit UI detects by name/message
+- iNaturalist rate-limits Cloudflare's shared egress IPs: `upstream.ts` retries a 429 once; then `src/lib/browserFallback.ts` lets the browser ask `api.inaturalist.org` directly (mappers shared via `src/lib/inatMap.ts`, CSP `connect-src` allows it, `/privacy` says so), and `RouteError` auto-retries a busy SSR page once per 30s
+- Server errors lose their class over server-fn serialization; `src/lib/rateLimit.ts` `isRateLimited` detects by name/message
 - `validateSearch` on `/place/$placeId` returns a partial (defaults stripped) so `<Link>` callers needn't pass `search`; read with `placeSearchSchema(Route.useSearch())`
 - Defining `src/start.ts` disables Start's automatic CSRF middleware — it is re-added explicitly there
 - Cache API only works on the deployed custom domain, not locally; Workers Free plan = 10 ms CPU (error 1102 if exceeded)

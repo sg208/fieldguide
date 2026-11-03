@@ -12,19 +12,25 @@ const errorProps = (error: Error): ErrorComponentProps => ({
 
 describe('RouteError', () => {
   it('shows the generic error for an unknown failure', async () => {
-    await renderWithProviders(
-      <RouteError {...errorProps(new Error('boom'))} />
-    );
+    const props = errorProps(new Error('boom'));
+    await renderWithProviders(<RouteError {...props} />);
     expect(
       screen.getByRole('heading', { level: 1, name: 'Something went wrong' })
     ).toBeInTheDocument();
     expect(screen.queryByText(/boom/)).not.toBeInTheDocument();
+    expect(props.reset).not.toHaveBeenCalled();
   });
 
-  it('explains a rate limit after server-fn serialization (message only)', async () => {
-    await renderWithProviders(
-      <RouteError {...errorProps(new Error('Upstream rate limit reached'))} />
-    );
+  it('explains a rate limit and retries once by itself (browser fallback)', async () => {
+    const first = errorProps(new Error('Upstream rate limit reached'));
+    const { unmount } = await renderWithProviders(<RouteError {...first} />);
+    expect(first.reset).toHaveBeenCalledTimes(1);
+    unmount();
+
+    // A second busy page right after must not loop.
+    const second = errorProps(new Error('Upstream rate limit reached'));
+    await renderWithProviders(<RouteError {...second} />);
+    expect(second.reset).not.toHaveBeenCalled();
     expect(
       screen.getByRole('heading', { level: 1, name: 'iNaturalist is busy' })
     ).toBeInTheDocument();

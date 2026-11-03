@@ -1,7 +1,7 @@
 const CSP_REPORT_ONLY = [
   "default-src 'self'",
   "img-src 'self' data: https://inaturalist-open-data.s3.amazonaws.com https://static.inaturalist.org",
-  "connect-src 'self'",
+  "connect-src 'self' https://api.inaturalist.org",
   "script-src 'self' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline'",
   "font-src 'self'",
