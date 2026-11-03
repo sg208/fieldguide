@@ -4,6 +4,7 @@ import {
   type ErrorComponentProps,
 } from '@tanstack/react-router';
 import type { ReactNode } from 'react';
+import { isRateLimited } from '../lib/rateLimit';
 import { RetryIcon, SearchIcon } from './icons';
 import { SystemPage } from './SystemPage';
 
@@ -34,19 +35,27 @@ export const NotFound = (): ReactNode => (
 );
 
 /** 500 (HANDOFF 8.5). The error object is never shown: it may carry upstream detail. */
-export const RouteError = ({ reset }: ErrorComponentProps): ReactNode => {
+export const RouteError = ({
+  error,
+  reset,
+}: ErrorComponentProps): ReactNode => {
   const router = useRouter();
+  const isBusy = isRateLimited(error);
   const handleRetry = (): void => {
     reset();
     void router.invalidate();
   };
   return (
     <SystemPage
-      title="Something went wrong"
-      lede="Field Guide hit an error loading this page. Try again, or start from a city."
+      title={isBusy ? 'iNaturalist is busy' : 'Something went wrong'}
+      lede={
+        isBusy
+          ? 'Too many requests reached iNaturalist at once. Wait a minute, then try again.'
+          : 'Field Guide hit an error loading this page. Try again, or start from a city.'
+      }
       specimen="Unreadable"
       locality="Unknown"
-      status="Error"
+      status={isBusy ? 'Busy' : 'Error'}
       icon="alert"
       actions={
         <>

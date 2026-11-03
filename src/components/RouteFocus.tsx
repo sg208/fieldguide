@@ -9,7 +9,8 @@ export const RouteFocus = (): ReactNode => {
   const previous = useRef(pathname);
 
   useEffect((): (() => void) | undefined => {
-    if (pathname === undefined || previous.current === pathname) return undefined;
+    if (pathname === undefined || previous.current === pathname)
+      return undefined;
     previous.current = pathname;
     const frame = requestAnimationFrame((): void => {
       const main = document.getElementById('main');
