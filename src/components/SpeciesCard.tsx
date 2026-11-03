@@ -52,7 +52,7 @@ export const SpeciesCard = ({
   return (
     <li
       id={`t-${species.taxonId}`}
-      className={`group relative row-span-2 grid grid-rows-subgrid rounded-sheet bg-sheet shadow-sheet transition-[transform,box-shadow] duration-200 ease-settle hover:-translate-y-0.5 hover:shadow-lift motion-reduce:hover:translate-y-0 target:outline-2 target:outline-offset-3 target:outline-stamp has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-3 has-[a:focus-visible]:outline-stamp ${
+      className={`group relative isolate row-span-2 grid grid-rows-subgrid rounded-sheet bg-sheet shadow-sheet transition-[transform,box-shadow] duration-200 ease-settle hover:-translate-y-0.5 hover:shadow-lift motion-reduce:hover:translate-y-0 target:outline-2 target:outline-offset-3 target:outline-stamp has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-3 has-[a:focus-visible]:outline-stamp ${
         isReturnTarget ? 'outline-2 outline-offset-3 outline-stamp' : ''
       }`}
     >

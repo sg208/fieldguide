@@ -138,7 +138,9 @@ function PlacePage(): ReactNode {
       <PlaceCover
         place={place}
         radius={search.radius}
-        speciesCount={overall.data?.totalResults}
+        speciesCount={
+          overall.isPlaceholderData ? undefined : overall.data?.totalResults
+        }
         shareUrl={`${SITE_URL}${location.pathname}${location.searchStr}`}
       />
       <div className="mt-5">

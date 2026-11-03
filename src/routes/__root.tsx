@@ -9,6 +9,7 @@ import {
 import type { ReactNode } from 'react';
 import { Footer } from '../components/Footer';
 import { Header, type HeaderVariant } from '../components/Header';
+import { RouteFocus } from '../components/RouteFocus';
 import { RegisterSW } from '../components/RegisterSW';
 import { NotFound, RouteError } from '../components/RouteStates';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE } from '../lib/site';
@@ -42,6 +43,7 @@ const RootDocument = (): ReactNode => {
           </main>
           <Footer />
         </div>
+        <RouteFocus />
         <RegisterSW />
         <Scripts />
       </body>

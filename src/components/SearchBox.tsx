@@ -156,12 +156,14 @@ export const SearchBox = (): ReactNode => {
           />
         )}
       </div>
-      <p id="city-hint" className="mt-2.5 text-sm text-ink-2">
+      <p className="mt-2.5 text-sm text-ink-2">
         <label htmlFor="city" className="field mr-1 text-ink">
           City
         </label>{' '}
-        Type at least two letters, then pick from the list. Try Medan, Lagos or
-        Reykjavik.
+        <span id="city-hint">
+          Type at least two letters, then pick from the list. Try Medan, Lagos
+          or Reykjavik.
+        </span>
       </p>
       <p role="status" className="sr-only">
         {isShown ? statusMessage(state, query, places.length) : ''}

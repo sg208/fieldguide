@@ -6,7 +6,7 @@ import { PhotoCredit } from '../PhotoCredit';
 type Props = { photos: Photo[]; name: string };
 
 const navButton =
-  'btn min-w-11 px-0 disabled:cursor-default disabled:opacity-45 disabled:hover:border-edge disabled:hover:bg-sheet';
+  'btn min-w-11 px-0 aria-disabled:cursor-default aria-disabled:opacity-45 aria-disabled:hover:border-edge aria-disabled:hover:bg-sheet';
 
 /** Scroll-snap strip of up to 6 photos; every photo carries its full credit (no credit, no photo). */
 export const PhotoGallery = ({ photos, name }: Props): ReactNode => {
@@ -85,8 +85,8 @@ export const PhotoGallery = ({ photos, name }: Props): ReactNode => {
             type="button"
             className={navButton}
             aria-label="Previous photo"
-            disabled={index === 0}
-            onClick={() => handleStep(-1)}
+            aria-disabled={index === 0}
+            onClick={() => index > 0 && handleStep(-1)}
           >
             <ArrowLeftIcon />
           </button>
@@ -94,8 +94,8 @@ export const PhotoGallery = ({ photos, name }: Props): ReactNode => {
             type="button"
             className={navButton}
             aria-label="Next photo"
-            disabled={index >= total - 1}
-            onClick={() => handleStep(1)}
+            aria-disabled={index >= total - 1}
+            onClick={() => index < total - 1 && handleStep(1)}
           >
             <ArrowRightIcon />
           </button>
