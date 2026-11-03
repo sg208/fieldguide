@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>Field Guide</title>
+  <rect width="512" height="512" rx="112" fill="#4A3A92"/>
+  <g transform="translate(256 262) rotate(-14) translate(-150 -90)"><path d="M62 0H290a10 10 0 0 1 10 10V170a10 10 0 0 1-10 10H62L0 124V56Z" fill="#E4E8E1"/><circle cx="44" cy="90" r="17" fill="#4A3A92"/><rect x="98" y="50" width="164" height="18" rx="4" fill="#4A3A92"/><rect x="98" y="90" width="164" height="10" rx="3" fill="#4A3A92" opacity=".55"/><rect x="98" y="120" width="104" height="10" rx="3" fill="#4A3A92" opacity=".55"/></g>
+</svg>

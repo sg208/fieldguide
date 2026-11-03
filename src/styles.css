@@ -1,0 +1,293 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/archivo/wdth.css'; /* normal, wght 100-900 + wdth 62-125 */
+@import '@fontsource-variable/archivo/wght-italic.css'; /* italic for scientific names */
+@import '@fontsource-variable/red-hat-mono/wght.css'; /* normal, wght 300-700 */
+
+:root {
+  --board: #e4e8e1;
+  --sheet: #fcfcfa;
+  --ink: #15191b;
+  --ink-2: #4a524e;
+  --rule: #d3d9d1;
+  --edge: #737d76;
+  --stamp: #4a3a92;
+  --stamp-soft: #e9e5f6;
+  --on-stamp: #ffffff;
+  --redlist: #b3261e;
+  --introduced: #8a5a00;
+  --endemic: #1f5e8c;
+  --cover-africa: #8a5a12;
+  --cover-asia: #9b2f2a;
+  --cover-europe: #1f4e79;
+  --cover-namerica: #1e5e5e;
+  --cover-samerica: #6b3466;
+  --cover-oceania: #0e5f86;
+  --cover-antarctica: #3e4a52;
+  --cover-neutral: #3e4a52;
+  --shadow-sheet:
+    0 1px 2px rgb(21 25 27 / 0.08), 0 3px 10px -2px rgb(21 25 27 / 0.1);
+  --shadow-lift:
+    0 2px 4px rgb(21 25 27 / 0.1), 0 10px 24px -6px rgb(21 25 27 / 0.18);
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --board: #101312;
+    --sheet: #191d1b;
+    --ink: #e6eae5;
+    --ink-2: #a3ada6;
+    --rule: #2c332f;
+    --edge: #6b756f;
+    --stamp: #b3a6f2;
+    --stamp-soft: #2a2448;
+    --on-stamp: #15122b;
+    --redlist: #ff8a80;
+    --introduced: #e3b45c;
+    --endemic: #8cc4ee;
+    --cover-africa: #6f4a0f;
+    --cover-asia: #7e2622;
+    --cover-europe: #1a4066;
+    --cover-namerica: #184d4d;
+    --cover-samerica: #572a53;
+    --cover-oceania: #0b4e6e;
+    --cover-antarctica: #333d44;
+    --cover-neutral: #333d44;
+    --shadow-sheet:
+      0 1px 2px rgb(0 0 0 / 0.4), 0 3px 10px -2px rgb(0 0 0 / 0.45);
+    --shadow-lift:
+      0 2px 4px rgb(0 0 0 / 0.45), 0 10px 24px -6px rgb(0 0 0 / 0.6);
+  }
+}
+
+@theme inline {
+  --color-board: var(--board);
+  --color-sheet: var(--sheet);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-rule: var(--rule);
+  --color-edge: var(--edge);
+  --color-stamp: var(--stamp);
+  --color-stamp-soft: var(--stamp-soft);
+  --color-on-stamp: var(--on-stamp);
+  --color-redlist: var(--redlist);
+  --color-introduced: var(--introduced);
+  --color-endemic: var(--endemic);
+  --color-cover-africa: var(--cover-africa);
+  --color-cover-asia: var(--cover-asia);
+  --color-cover-europe: var(--cover-europe);
+  --color-cover-namerica: var(--cover-namerica);
+  --color-cover-samerica: var(--cover-samerica);
+  --color-cover-oceania: var(--cover-oceania);
+  --color-cover-antarctica: var(--cover-antarctica);
+  --color-cover-neutral: var(--cover-neutral);
+  --shadow-sheet: var(--shadow-sheet);
+  --shadow-lift: var(--shadow-lift);
+}
+
+@theme {
+  --font-sans: 'Archivo Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:
+    'Red Hat Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --text-micro: 0.75rem; /* field labels, uppercase, +0.06em */
+  --text-micro--line-height: 1.3;
+  --text-xs: 0.8125rem; /* credits rows, captions */
+  --text-xs--line-height: 1.4;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.45;
+  --text-base: 1rem;
+  --text-base--line-height: 1.55;
+  --text-read: 1.0625rem; /* summaries, legal body */
+  --text-read--line-height: 1.6;
+  --text-h3: 1.0625rem; /* card names (1rem on phones) */
+  --text-h3--line-height: 1.2;
+  --text-h2: 1.375rem;
+  --text-h2--line-height: 1.2;
+  --text-title: clamp(
+    2.25rem,
+    1.6rem + 3vw,
+    3.5rem
+  ); /* species, legal, system h1 */
+  --text-title--line-height: 0.98;
+  --text-place: clamp(2.5rem, 1.6rem + 4vw, 4.25rem); /* place h1 */
+  --text-place--line-height: 0.95;
+  --text-hero: clamp(2.5rem, 1.4rem + 5.2vw, 5.25rem); /* home h1 */
+  --text-hero--line-height: 0.98;
+
+  --radius-sheet: 3px;
+  --radius-label: 2px;
+  --radius-control: 6px;
+  --radius-tab: 6px 6px 0 0;
+  --radius-chip: 9999px;
+
+  --ease-settle: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  body {
+    background: var(--board);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.55;
+    font-variation-settings: 'wdth' 100;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--stamp);
+    color: var(--on-stamp);
+  }
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+  a:hover {
+    text-decoration-thickness: 2px;
+  }
+  :focus-visible {
+    outline: 2px solid var(--stamp);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  h1,
+  h2,
+  h3 {
+    line-height: 1.1;
+    text-wrap: balance;
+    font-stretch: 87%;
+    font-weight: 650;
+  }
+  h1 {
+    font-weight: 700;
+    font-stretch: 80%;
+    letter-spacing: -0.03em;
+  }
+}
+
+@layer components {
+  /* page container: 1280px, 16px gutters (32px from md) */
+  .wrap {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 16px;
+  }
+  @media (min-width: 768px) {
+    .wrap {
+      padding-inline: 32px;
+    }
+  }
+  /* numbers and codes only: coordinates, counts, dates, licences, ranks */
+  .mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.92em;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  /* scientific names; add lang="la" on the element */
+  .sci {
+    font-style: italic;
+    font-stretch: 100%;
+  }
+  /* field labels on specimen labels */
+  .field {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    font-stretch: 100%;
+  }
+  /* licence code box */
+  .lic {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid var(--edge);
+    border-radius: 2px;
+    padding: 0 6px;
+    white-space: nowrap;
+  }
+  .icon {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 16px;
+    border-radius: var(--radius-control);
+    border: 1px solid var(--edge);
+    background: var(--sheet);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background: var(--board);
+    border-color: var(--ink);
+  }
+  .btn-primary {
+    background: var(--stamp);
+    border-color: var(--stamp);
+    color: var(--on-stamp);
+  }
+  .btn-primary:hover {
+    background: var(--stamp);
+    filter: brightness(1.12);
+  }
+  .btn-ghost {
+    border-color: transparent;
+    background: transparent;
+  }
+  .btn-ghost:hover {
+    background: var(--sheet);
+    border-color: var(--rule);
+  }
+  /* skip link: first focusable element, hidden until focused */
+  .skip {
+    position: absolute;
+    left: 12px;
+    top: -60px;
+    z-index: 50;
+    background: var(--stamp);
+    color: var(--on-stamp);
+    padding: 10px 14px;
+    border-radius: var(--radius-chip);
+    font-weight: 600;
+  }
+  .skip:focus {
+    top: 12px;
+  }
+}
+
+/* motion is limited to small lifts and fades; off when the device asks */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

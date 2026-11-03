@@ -1,0 +1,16 @@
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=(self), payment=(), usb=()
+  Content-Security-Policy-Report-Only: default-src 'self'; img-src 'self' data: https://inaturalist-open-data.s3.amazonaws.com https://static.inaturalist.org; connect-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/sw.js
+  Cache-Control: no-cache
+
+/manifest.webmanifest
+  Cache-Control: no-cache

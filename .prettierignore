@@ -1,0 +1,10 @@
+pnpm-lock.yaml
+src/routeTree.gen.ts
+.tanstack
+dist
+
+# Design package (impeccable-owned, hand-formatted)
+design/
+DESIGN.md
+PRODUCT.md
+.impeccable/

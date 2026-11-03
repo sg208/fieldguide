@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Offline · Field Guide</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#E4E8E1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101312" media="(prefers-color-scheme: dark)">
+<style>
+@font-face{font-family:"Archivo Variable";font-style:normal;font-display:swap;font-weight:100 900;font-stretch:62% 125%;src:url(fonts/archivo-latin-wdth-normal.woff2) format("woff2-variations")}
+@font-face{font-family:"Archivo Variable";font-style:italic;font-display:swap;font-weight:100 900;src:url(fonts/archivo-latin-wght-italic.woff2) format("woff2-variations")}
+@font-face{font-family:"Red Hat Mono Variable";font-style:normal;font-display:swap;font-weight:300 700;src:url(fonts/red-hat-mono-latin-wght-normal.woff2) format("woff2-variations")}
+:root{
+  --board:#E4E8E1;--sheet:#FCFCFA;--ink:#15191B;--ink-2:#4A524E;--rule:#D3D9D1;--edge:#737D76;
+  --stamp:#4A3A92;--stamp-soft:#E9E5F6;--on-stamp:#FFFFFF;
+  --redlist:#B3261E;--introduced:#8A5A00;--endemic:#1F5E8C;
+  --cover-asia:#9B2F2A;--cover-africa:#8A5A12;--cover-europe:#1F4E79;--cover-namerica:#1E5E5E;--cover-samerica:#6B3466;--cover-oceania:#0E5F86;--cover-antarctica:#3E4A52;--cover-neutral:#3E4A52;
+  --shadow-sheet:0 1px 2px rgb(21 25 27 / .08),0 3px 10px -2px rgb(21 25 27 / .10);
+  --shadow-lift:0 2px 4px rgb(21 25 27 / .10),0 10px 24px -6px rgb(21 25 27 / .18);
+  --font-sans:"Archivo Variable",ui-sans-serif,system-ui,sans-serif;
+  --font-mono:"Red Hat Mono Variable",ui-monospace,"SF Mono",Menlo,monospace;
+  --r-sheet:3px;--r-control:6px;--r-chip:999px;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --board:#101312;--sheet:#191D1B;--ink:#E6EAE5;--ink-2:#A3ADA6;--rule:#2C332F;--edge:#6B756F;
+  --stamp:#B3A6F2;--stamp-soft:#2A2448;--on-stamp:#15122B;
+  --redlist:#FF8A80;--introduced:#E3B45C;--endemic:#8CC4EE;
+  --cover-asia:#7E2622;--cover-africa:#6F4A0F;--cover-europe:#1A4066;--cover-namerica:#184D4D;--cover-samerica:#572A53;--cover-oceania:#0B4E6E;--cover-antarctica:#333D44;--cover-neutral:#333D44;
+  --shadow-sheet:0 1px 2px rgb(0 0 0 / .4),0 3px 10px -2px rgb(0 0 0 / .45);
+  --shadow-lift:0 2px 4px rgb(0 0 0 / .45),0 10px 24px -6px rgb(0 0 0 / .6);
+}}
+:root[data-theme=dark]{
+  --board:#101312;--sheet:#191D1B;--ink:#E6EAE5;--ink-2:#A3ADA6;--rule:#2C332F;--edge:#6B756F;
+  --stamp:#B3A6F2;--stamp-soft:#2A2448;--on-stamp:#15122B;
+  --redlist:#FF8A80;--introduced:#E3B45C;--endemic:#8CC4EE;
+  --cover-asia:#7E2622;--cover-africa:#6F4A0F;--cover-europe:#1A4066;--cover-namerica:#184D4D;--cover-samerica:#572A53;--cover-oceania:#0B4E6E;--cover-antarctica:#333D44;--cover-neutral:#333D44;
+  --shadow-sheet:0 1px 2px rgb(0 0 0 / .4),0 3px 10px -2px rgb(0 0 0 / .45);
+  --shadow-lift:0 2px 4px rgb(0 0 0 / .45),0 10px 24px -6px rgb(0 0 0 / .6);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--board);color:var(--ink);font-family:var(--font-sans);font-size:1rem;line-height:1.55;font-variation-settings:"wdth" 100;-webkit-font-smoothing:antialiased}
+::selection{background:var(--stamp);color:var(--on-stamp)}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-underline-offset:.2em;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--stamp);outline-offset:2px;border-radius:2px}
+h1,h2,h3{margin:0;line-height:1.1;text-wrap:balance;font-stretch:87%}
+p{margin:0}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:.92em;font-weight:500;letter-spacing:-.02em}
+.sci{font-style:italic;font-stretch:100%}
+.skip{position:absolute;left:12px;top:-60px;background:var(--stamp);color:var(--on-stamp);padding:10px 14px;border-radius:var(--r-control);z-index:10;font-weight:600}
+.skip:focus{top:12px}
+.wrap{width:100%;max-width:1280px;margin-inline:auto;padding-inline:16px}
+@media (min-width:768px){.wrap{padding-inline:32px}}
+.icon{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+/* site header */
+.site-head{border-bottom:1px solid var(--rule);background:var(--board)}
+.site-head .wrap{display:flex;align-items:center;justify-content:space-between;min-height:60px;gap:12px}
+.mark{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-stretch:87%;font-size:1.125rem;letter-spacing:-.01em;min-height:44px}
+.mark svg{width:28px;height:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border-radius:var(--r-control);border:1px solid var(--edge);background:var(--sheet);color:var(--ink);font:inherit;font-weight:600;font-size:.9375rem;text-decoration:none;cursor:pointer}
+.btn:hover{background:var(--board);border-color:var(--ink)}
+.btn-primary{background:var(--stamp);border-color:var(--stamp);color:var(--on-stamp)}
+.btn-primary:hover{background:var(--stamp);filter:brightness(1.12)}
+.btn-ghost{border-color:transparent;background:transparent}
+.btn-ghost:hover{background:var(--sheet);border-color:var(--rule)}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* micro label: field names on specimen labels */
+.field{font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-stretch:100%}
+/* footer */
+.site-foot{margin-top:72px;border-top:1px solid var(--rule);padding-block:32px 40px;font-size:.875rem;color:var(--ink-2)}
+.site-foot .wrap{display:grid;gap:20px}
+.site-foot nav ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 20px}
+.site-foot a{color:var(--ink)}
+.site-foot nav a{display:inline-flex;min-height:44px;align-items:center}
+.site-foot .fine{max-width:68ch}
+@media (min-width:1024px){.site-foot .wrap{grid-template-columns:1fr auto;align-items:start}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+.sys{display:grid;gap:32px;padding-block:40px 24px;align-items:center}
+.sys .mount{order:2}
+@media (min-width:1024px){.sys .mount{order:0}.mount .void{aspect-ratio:4/3}.sys{grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:72px;padding-block:96px 48px}}
+.mount{background:var(--sheet);border-radius:var(--r-sheet);box-shadow:var(--shadow-sheet);padding:16px;max-width:420px;width:100%;justify-self:center}
+.mount .void{aspect-ratio:16/9;border:1.5px dashed var(--edge);border-radius:2px;display:grid;place-items:center;color:var(--ink-2)}
+.mount .void svg{width:40px;height:40px;stroke-width:1.5}
+.mount .lab{margin-top:14px;border:1px solid var(--rule);border-radius:2px}
+.mount .lab div{display:grid;grid-template-columns:110px 1fr;gap:10px;padding:8px 12px;border-top:1px solid var(--rule);font-size:.875rem}
+.mount .lab div:first-child{border-top:0}
+.mount .lab dt{font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);padding-top:1px}
+.mount .lab dd{margin:0}
+.sys h1{font-size:clamp(2.25rem,1.5rem + 3.4vw,4rem);font-weight:700;letter-spacing:-.03em;font-stretch:80%;line-height:.98}
+.sys .lede{margin-top:14px;font-size:1.0625rem;color:var(--ink-2);max-width:48ch}
+.sys .acts{margin-top:24px;display:flex;flex-wrap:wrap;gap:10px}
+.sys .code{margin-top:20px;font-size:.8125rem;color:var(--ink-2)}
+.saved{margin-top:28px}
+.saved h2{font-size:1.125rem;font-weight:650}
+.saved ul{list-style:none;margin:10px 0 0;padding:0;background:var(--sheet);border-radius:var(--r-sheet);box-shadow:var(--shadow-sheet)}
+.saved li{border-top:1px solid var(--rule)}
+.saved li:first-child{border-top:0}
+.saved a{display:flex;justify-content:space-between;gap:12px;align-items:center;min-height:48px;padding:8px 16px;text-decoration:none}
+.saved a:hover{background:var(--board)}
+.saved .k{font-size:.8125rem;color:var(--ink-2)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap">
+    <a class="mark" href="home.html"><svg viewBox="0 0 512 512" aria-hidden="true" focusable="false"><rect width="512" height="512" rx="112" fill="var(--stamp)"/><g transform="translate(256 262) rotate(-14) translate(-150 -90)"><path d="M62 0H290a10 10 0 0 1 10 10V170a10 10 0 0 1-10 10H62L0 124V56Z" fill="var(--board)"/><circle cx="44" cy="90" r="17" fill="var(--stamp)"/><rect x="98" y="50" width="164" height="18" rx="4" fill="var(--stamp)"/><rect x="98" y="90" width="164" height="10" rx="3" fill="var(--stamp)" opacity=".55"/><rect x="98" y="120" width="104" height="10" rx="3" fill="var(--stamp)" opacity=".55"/></g></svg>
+<span>Field Guide</span></a>
+  </div>
+</header>
+<main id="main" class="wrap">
+  <div class="sys">
+    <figure class="mount" aria-hidden="true" style="margin:0">
+      <div class="void"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><path d="m2 2 20 20"/></svg></div>
+      <dl class="lab">
+        <div><dt>Connection</dt><dd>None</dd></div>
+        <div><dt>Saved pages</dt><dd class="mono">3</dd></div>
+      </dl>
+    </figure>
+    <div>
+      <h1>You’re offline</h1>
+      <p class="lede">Field Guide needs a connection to look up new places and species. Pages you opened recently are saved on this device and still work.</p>
+      <div class="acts">
+        <button class="btn btn-primary" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>Try again</button>
+      </div>
+      <section class="saved" aria-labelledby="h-saved">
+        <h2 id="h-saved">Saved on this device</h2>
+        <ul>
+          <li><a href="place.html"><span>Medan</span><span class="k">Place · 25 km</span></a></li>
+          <li><a href="species.html"><span>Milky Stork</span><span class="k">Species</span></a></li>
+          <li><a href="#"><span>Reykjavik</span><span class="k">Place · 10 km</span></a></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="fine">
+      <p><strong style="color:var(--ink)">Field Guide</strong> is a portfolio project by Syailendra Ginting. Species, counts and photos come from <a href="https://www.inaturalist.org">iNaturalist</a> research-grade observations; every photo belongs to the person credited under it. City search by <a href="https://open-meteo.com">Open-Meteo</a> with <a href="https://www.geonames.org">GeoNames</a> data (CC BY 4.0).</p>
+    </div>
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="credits.html">Credits</a></li>
+        <li><a href="legal.html">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Accessibility</a></li>
+        <li><a href="https://github.com/sg208/fieldguide">Source on GitHub</a></li>
+        <li><a href="https://github.com/sg208/fieldguide/blob/main/LICENSE">MIT licence</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

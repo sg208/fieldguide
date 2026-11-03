@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field Guide: what lives near any city</title>
+<meta name="theme-color" content="#E4E8E1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101312" media="(prefers-color-scheme: dark)">
+<style>
+@font-face{font-family:"Archivo Variable";font-style:normal;font-display:swap;font-weight:100 900;font-stretch:62% 125%;src:url(fonts/archivo-latin-wdth-normal.woff2) format("woff2-variations")}
+@font-face{font-family:"Archivo Variable";font-style:italic;font-display:swap;font-weight:100 900;src:url(fonts/archivo-latin-wght-italic.woff2) format("woff2-variations")}
+@font-face{font-family:"Red Hat Mono Variable";font-style:normal;font-display:swap;font-weight:300 700;src:url(fonts/red-hat-mono-latin-wght-normal.woff2) format("woff2-variations")}
+:root{
+  --board:#E4E8E1;--sheet:#FCFCFA;--ink:#15191B;--ink-2:#4A524E;--rule:#D3D9D1;--edge:#737D76;
+  --stamp:#4A3A92;--stamp-soft:#E9E5F6;--on-stamp:#FFFFFF;
+  --redlist:#B3261E;--introduced:#8A5A00;--endemic:#1F5E8C;
+  --cover-asia:#9B2F2A;--cover-africa:#8A5A12;--cover-europe:#1F4E79;--cover-namerica:#1E5E5E;--cover-samerica:#6B3466;--cover-oceania:#0E5F86;--cover-antarctica:#3E4A52;--cover-neutral:#3E4A52;
+  --shadow-sheet:0 1px 2px rgb(21 25 27 / .08),0 3px 10px -2px rgb(21 25 27 / .10);
+  --shadow-lift:0 2px 4px rgb(21 25 27 / .10),0 10px 24px -6px rgb(21 25 27 / .18);
+  --font-sans:"Archivo Variable",ui-sans-serif,system-ui,sans-serif;
+  --font-mono:"Red Hat Mono Variable",ui-monospace,"SF Mono",Menlo,monospace;
+  --r-sheet:3px;--r-control:6px;--r-chip:999px;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --board:#101312;--sheet:#191D1B;--ink:#E6EAE5;--ink-2:#A3ADA6;--rule:#2C332F;--edge:#6B756F;
+  --stamp:#B3A6F2;--stamp-soft:#2A2448;--on-stamp:#15122B;
+  --redlist:#FF8A80;--introduced:#E3B45C;--endemic:#8CC4EE;
+  --cover-asia:#7E2622;--cover-africa:#6F4A0F;--cover-europe:#1A4066;--cover-namerica:#184D4D;--cover-samerica:#572A53;--cover-oceania:#0B4E6E;--cover-antarctica:#333D44;--cover-neutral:#333D44;
+  --shadow-sheet:0 1px 2px rgb(0 0 0 / .4),0 3px 10px -2px rgb(0 0 0 / .45);
+  --shadow-lift:0 2px 4px rgb(0 0 0 / .45),0 10px 24px -6px rgb(0 0 0 / .6);
+}}
+:root[data-theme=dark]{
+  --board:#101312;--sheet:#191D1B;--ink:#E6EAE5;--ink-2:#A3ADA6;--rule:#2C332F;--edge:#6B756F;
+  --stamp:#B3A6F2;--stamp-soft:#2A2448;--on-stamp:#15122B;
+  --redlist:#FF8A80;--introduced:#E3B45C;--endemic:#8CC4EE;
+  --cover-asia:#7E2622;--cover-africa:#6F4A0F;--cover-europe:#1A4066;--cover-namerica:#184D4D;--cover-samerica:#572A53;--cover-oceania:#0B4E6E;--cover-antarctica:#333D44;--cover-neutral:#333D44;
+  --shadow-sheet:0 1px 2px rgb(0 0 0 / .4),0 3px 10px -2px rgb(0 0 0 / .45);
+  --shadow-lift:0 2px 4px rgb(0 0 0 / .45),0 10px 24px -6px rgb(0 0 0 / .6);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--board);color:var(--ink);font-family:var(--font-sans);font-size:1rem;line-height:1.55;font-variation-settings:"wdth" 100;-webkit-font-smoothing:antialiased}
+::selection{background:var(--stamp);color:var(--on-stamp)}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-underline-offset:.2em;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--stamp);outline-offset:2px;border-radius:2px}
+h1,h2,h3{margin:0;line-height:1.1;text-wrap:balance;font-stretch:87%}
+p{margin:0}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:.92em;font-weight:500;letter-spacing:-.02em}
+.sci{font-style:italic;font-stretch:100%}
+.skip{position:absolute;left:12px;top:-60px;background:var(--stamp);color:var(--on-stamp);padding:10px 14px;border-radius:var(--r-control);z-index:10;font-weight:600}
+.skip:focus{top:12px}
+.wrap{width:100%;max-width:1280px;margin-inline:auto;padding-inline:16px}
+@media (min-width:768px){.wrap{padding-inline:32px}}
+.icon{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+/* site header */
+.site-head{border-bottom:1px solid var(--rule);background:var(--board)}
+.site-head .wrap{display:flex;align-items:center;justify-content:space-between;min-height:60px;gap:12px}
+.mark{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-stretch:87%;font-size:1.125rem;letter-spacing:-.01em;min-height:44px}
+.mark svg{width:28px;height:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border-radius:var(--r-control);border:1px solid var(--edge);background:var(--sheet);color:var(--ink);font:inherit;font-weight:600;font-size:.9375rem;text-decoration:none;cursor:pointer}
+.btn:hover{background:var(--board);border-color:var(--ink)}
+.btn-primary{background:var(--stamp);border-color:var(--stamp);color:var(--on-stamp)}
+.btn-primary:hover{background:var(--stamp);filter:brightness(1.12)}
+.btn-ghost{border-color:transparent;background:transparent}
+.btn-ghost:hover{background:var(--sheet);border-color:var(--rule)}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* micro label: field names on specimen labels */
+.field{font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-stretch:100%}
+/* footer */
+.site-foot{margin-top:72px;border-top:1px solid var(--rule);padding-block:32px 40px;font-size:.875rem;color:var(--ink-2)}
+.site-foot .wrap{display:grid;gap:20px}
+.site-foot nav ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 20px}
+.site-foot a{color:var(--ink)}
+.site-foot nav a{display:inline-flex;min-height:44px;align-items:center}
+.site-foot .fine{max-width:68ch}
+@media (min-width:1024px){.site-foot .wrap{grid-template-columns:1fr auto;align-items:start}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+.hero{padding-block:40px 32px;display:grid;grid-template-columns:minmax(0,1fr);gap:40px}
+@media (min-width:1024px){.hero{grid-template-columns:minmax(0,7fr) minmax(0,5fr);align-items:center}}
+.stack{display:none;margin:0;position:relative;height:420px}
+@media (min-width:1024px){.stack{display:block}}
+.stack .sheet{position:absolute;width:220px;padding:10px 10px 12px;background:var(--sheet);border-radius:var(--r-sheet);box-shadow:var(--shadow-lift)}
+.stack img{aspect-ratio:1;object-fit:cover;width:100%}
+.stack .cn{margin-top:10px;font-weight:650;font-stretch:87%;line-height:1.2}
+.stack .sn{font-size:.875rem;color:var(--ink-2)}
+.stack .cr,.spec .credit{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;font-size:.8125rem;line-height:1.3;color:var(--ink)}
+.stack .cr{margin-top:8px;padding-top:8px;border-top:1px solid var(--rule)}
+.cap{width:100%;font-size:.6875rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.who{font-weight:500}
+.lic{font-family:var(--font-mono);font-size:.75rem;font-weight:600;white-space:nowrap;border:1px solid var(--edge);border-radius:2px;padding:0 4px;line-height:1.5}
+.stack .s1{left:0;top:48px}
+.stack .s2{right:0;top:0}
+.stack figcaption{position:absolute;left:0;bottom:0;font-size:.8125rem;color:var(--ink-2)}
+@media (min-width:1024px){.hero{padding-block:88px 56px}}
+.hero h1{font-size:clamp(2.5rem,1.4rem + 5.2vw,5.25rem);font-weight:700;letter-spacing:-.03em;font-stretch:80%;max-width:14ch;line-height:.98}
+.hero .lede{margin-top:28px;max-width:52ch;font-size:1.0625rem;color:var(--ink-2)}
+@media (min-width:1024px){.hero .lede{font-size:1.1875rem}}
+.search{margin-top:4px;max-width:680px}
+.combo{position:relative;display:flex;align-items:center;gap:12px;border-bottom:3px solid var(--ink);background:transparent}
+.combo:focus-within{border-bottom-color:var(--stamp)}
+.combo:focus-within .icon{color:var(--stamp)}
+.combo .icon{width:clamp(28px,4vw,44px);height:clamp(28px,4vw,44px);stroke-width:2.25;color:var(--ink);flex:none}
+.combo input{flex:1;min-width:0;width:100%;height:auto;padding:4px 0 8px;border:0;background:transparent;font:inherit;font-size:clamp(2.5rem,1.4rem + 5.2vw,5.25rem);font-weight:700;font-stretch:80%;letter-spacing:-.03em;line-height:1.05;color:var(--ink);outline:none}
+.combo input::placeholder{color:var(--ink-2);opacity:.75}
+.search .hint{margin-top:10px;font-size:.875rem;color:var(--ink-2)}
+.search .hint .field{color:var(--ink);margin-right:4px}
+/* cabinet */
+.cabinet{padding-block:24px 8px}
+.cabinet h2{font-size:1.375rem;font-weight:650;letter-spacing:-.01em}
+.cabinet .sub{margin-top:4px;color:var(--ink-2);font-size:.9375rem}
+.drawers{list-style:none;margin:20px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (min-width:768px){.drawers{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}}
+.drawer{position:relative;display:flex;flex-direction:column;height:100%;text-decoration:none;background:var(--sheet);border-radius:var(--r-sheet);box-shadow:var(--shadow-sheet);overflow:hidden;transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s}
+.drawer:hover{transform:translateY(-2px);box-shadow:var(--shadow-lift)}
+.drawer .cover{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:var(--c);color:#fff;font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.drawer .holder{margin:12px 12px 0;padding:10px 12px 12px;border:1px solid var(--rule);border-radius:2px;flex:1}
+.drawer h3{font-size:1.375rem;font-weight:700;letter-spacing:-.015em}
+@media (min-width:1024px){.drawer h3{font-size:1.625rem}}
+.drawer .where{margin-top:2px;font-size:.875rem;color:var(--ink-2)}
+.drawer .coord{margin-top:8px;color:var(--ink-2);font-size:.8125rem;white-space:nowrap}
+.drawer .pull{display:block;width:44px;height:6px;border-radius:3px;background:var(--rule);margin:12px auto 12px}
+/* how to read a label */
+.howto{margin-top:56px;display:grid;gap:24px;align-items:start}
+@media (min-width:1024px){.howto{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;margin-top:88px}}
+.howto h2{font-size:1.375rem;font-weight:650}
+.howto p.lead{margin-top:8px;color:var(--ink-2);max-width:56ch}
+.sample{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:420px){.sample{grid-template-columns:150px minmax(0,1fr);gap:14px}}
+.spec{background:var(--sheet);border-radius:var(--r-sheet);box-shadow:var(--shadow-sheet);overflow:hidden}
+.spec img{aspect-ratio:1;object-fit:cover;width:100%;background:var(--rule)}
+.spec .lab{padding:10px 12px 12px;border-top:1px solid var(--rule)}
+.spec .cn{font-size:1rem;font-weight:650;line-height:1.2;font-stretch:87%}
+.spec .sn{font-size:.875rem;color:var(--ink-2)}
+.spec .row{margin-top:8px;padding-top:6px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;gap:8px;font-size:.8125rem}
+.spec .credit{padding:8px 12px 10px;border-top:1px solid var(--rule)}
+dl.key{margin:0;display:grid;gap:14px}
+dl.key div{border-top:1px solid var(--rule);padding-top:8px}
+dl.key dt{font-weight:650;font-size:.9375rem}
+dl.key dd{margin:2px 0 0;color:var(--ink-2);font-size:.875rem}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap">
+    <a class="mark" href="home.html"><svg viewBox="0 0 512 512" aria-hidden="true" focusable="false"><rect width="512" height="512" rx="112" fill="var(--stamp)"/><g transform="translate(256 262) rotate(-14) translate(-150 -90)"><path d="M62 0H290a10 10 0 0 1 10 10V170a10 10 0 0 1-10 10H62L0 124V56Z" fill="var(--board)"/><circle cx="44" cy="90" r="17" fill="var(--stamp)"/><rect x="98" y="50" width="164" height="18" rx="4" fill="var(--stamp)"/><rect x="98" y="90" width="164" height="10" rx="3" fill="var(--stamp)" opacity=".55"/><rect x="98" y="120" width="104" height="10" rx="3" fill="var(--stamp)" opacity=".55"/></g></svg>
+<span>Field Guide</span></a>
+    <a class="btn btn-ghost" href="credits.html">Credits</a>
+  </div>
+</header>
+<main id="main">
+  <section class="hero wrap" aria-labelledby="h1">
+    <div class="hero-text">
+    <h1 id="h1">What lives near<span class="vh"> any city?</span></h1>
+    <form class="search" role="search" action="#">
+      <div class="combo">
+        <input id="city" type="text" role="combobox" aria-expanded="false" aria-controls="city-list" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="your city?" aria-describedby="city-hint">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      </div>
+      <p class="hint" id="city-hint"><label for="city" class="field">City</label> Type at least two letters, then pick from the list. Try Medan, Lagos or Reykjavik.</p>
+    </form>
+    <p class="lede">Birds, plants, insects and more, ranked by how often people have photographed and identified them within 10, 25 or 50&nbsp;km. Every record is an iNaturalist research-grade observation.</p>
+    </div>
+    <figure class="stack" aria-label="Two sheets from Medan">
+      <div class="sheet s1"><img src="https://inaturalist-open-data.s3.amazonaws.com/photos/77613552/small.jpg" width="240" height="240" alt="Eastern Cattle-Egret in breeding plumage"><p class="cn">Eastern Cattle-Egret</p><p class="sn sci" lang="la">Ardea coromanda</p><p class="cr"><span class="cap">Photo</span><span class="who">© Ben Tsai蔡維哲</span><span class="lic">CC BY-NC</span></p></div>
+      <div class="sheet s2"><img src="https://inaturalist-open-data.s3.amazonaws.com/photos/115048419/small.jpg" width="240" height="240" alt="Asian Weaver Ant on a leaf"><p class="cn">Asian Weaver Ant</p><p class="sn sci" lang="la">Oecophylla smaragdina</p><p class="cr"><span class="cap">Photo</span><span class="who">© Thomas Job</span><span class="lic">CC BY-NC</span></p></div>
+      <figcaption>From the Medan drawer, 25&nbsp;km</figcaption>
+    </figure>
+  </section>
+
+  <section class="cabinet wrap" aria-labelledby="h-drawers">
+    <h2 id="h-drawers">Or open a drawer</h2>
+    <p class="sub">Eight cities on six continents.</p>
+    <ul class="drawers">
+      <li><a class="drawer" style="--c:var(--cover-asia)" href="place.html"><span class="cover">Asia</span><div class="holder"><h3>Medan</h3><p class="where">North Sumatra, Indonesia</p><p class="coord mono">3.58°&#8239;N &nbsp;98.66°&#8239;E</p></div><span class="pull" aria-hidden="true"></span></a></li>
+      <li><a class="drawer" style="--c:var(--cover-africa)" href="#"><span class="cover">Africa</span><div class="holder"><h3>Lagos</h3><p class="where">Lagos, Nigeria</p><p class="coord mono">6.45°&#8239;N &nbsp;3.39°&#8239;E</p></div><span class="pull" aria-hidden="true"></span></a></li>
+      <li><a class="drawer" style="--c:var(--cover-europe)" href="#"><span class="cover">Europe</span><div class="holder"><h3>Reykjavik</h3><p class="where">Capital Region, Iceland</p><p class="coord mono">64.13°&#8239;N &nbsp;21.89°&#8239;W</p></div><span class="pull" aria-hidden="true"></span></a></li>
+      <li><a class="drawer" style="--c:var(--cover-samerica)" href="#"><span class="cover">South America</span><div class="holder"><h3>La Paz</h3><p class="where">La Paz Department, Bolivia</p><p class="coord mono">16.50°&#8239;S &nbsp;68.15°&#8239;W</p></div><span class="pull" aria-hidden="true"></span></a></li>
+      <li><a class="drawer" style="--c:var(--cover-asia)" href="#"><span class="cover">Asia</span><div class="holder"><h3>Ulaanbaatar</h3><p class="where">Ulaanbaatar, Mongolia</p><p class="coord mono">47.90°&#8239;N &nbsp;106.88°&#8239;E</p></div><span class="pull" aria-hidden="true"></span></a></li>
+      <li><a class="drawer" style="--c:var(--cover-namerica)" href="#"><span class="cover">North America</span><div class="holder"><h3>Vancouver</h3><p class="where">British Columbia, Canada</p><p class="coord mono">49.25°&#8239;N &nbsp;123.11°&#8239;W</p></div><span class="pull" aria-hidden="true"></span></a></li>
+      <li><a class="drawer" style="--c:var(--cover-africa)" href="#"><span class="cover">Africa</span><div class="holder"><h3>Nairobi</h3><p class="where">Nairobi County, Kenya</p><p class="coord mono">1.28°&#8239;S &nbsp;36.81°&#8239;E</p></div><span class="pull" aria-hidden="true"></span></a></li>
+      <li><a class="drawer" style="--c:var(--cover-oceania)" href="#"><span class="cover">Oceania</span><div class="holder"><h3>Cairns</h3><p class="where">Queensland, Australia</p><p class="coord mono">16.92°&#8239;S &nbsp;145.76°&#8239;E</p></div><span class="pull" aria-hidden="true"></span></a></li>
+    </ul>
+  </section>
+
+  <section class="howto wrap" aria-labelledby="h-label">
+    <div>
+      <h2 id="h-label">How to read a label</h2>
+      <p class="lead">Each species gets a sheet. The number is how many research-grade observations people have shared near the city, not how many animals live there. A common bird near a busy park will outrank a rare one in the hills.</p>
+    </div>
+    <div class="sample">
+      <article class="spec" aria-label="Example label: Yellow-vented Bulbul">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/191239279/small.jpg" width="240" height="240" alt="Yellow-vented Bulbul perched on a branch" loading="lazy">
+        <div class="lab">
+          <p class="cn">Yellow-vented Bulbul</p>
+          <p class="sn sci" lang="la">Pycnonotus goiavier</p>
+          <p class="row"><span><span class="mono">15</span> obs.</span><span>within 25&nbsp;km</span></p>
+        </div>
+        <p class="credit"><span class="cap">Photo</span><span class="who">© Sam Hambly</span><span class="lic">CC BY-NC</span></p>
+      </article>
+      <dl class="key">
+        <div><dt>Common and scientific name</dt><dd>As iNaturalist lists them. The italic line is the species.</dd></div>
+        <div><dt>Observations</dt><dd>Research-grade records inside the radius you chose.</dd></div>
+        <div><dt>Photo credit</dt><dd>The photographer and their licence. Every photo keeps its credit.</dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="fine">
+      <p><strong style="color:var(--ink)">Field Guide</strong> is a portfolio project by Syailendra Ginting. Species, counts and photos come from <a href="https://www.inaturalist.org">iNaturalist</a> research-grade observations; every photo belongs to the person credited under it. City search by <a href="https://open-meteo.com">Open-Meteo</a> with <a href="https://www.geonames.org">GeoNames</a> data (CC BY 4.0).</p>
+    </div>
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="credits.html">Credits</a></li>
+        <li><a href="legal.html">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Accessibility</a></li>
+        <li><a href="https://github.com/sg208/fieldguide">Source on GitHub</a></li>
+        <li><a href="https://github.com/sg208/fieldguide/blob/main/LICENSE">MIT licence</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
