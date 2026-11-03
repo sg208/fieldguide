@@ -63,7 +63,7 @@ export const RouteError = ({
       title={isBusy ? 'iNaturalist is busy' : 'Something went wrong'}
       lede={
         isBusy
-          ? 'Too many requests reached iNaturalist at once. Wait a minute, then try again.'
+          ? 'Too many requests reached iNaturalist at once. Field Guide is asking again from your browser; if this page stays, wait a minute and try again.'
           : 'Field Guide hit an error loading this page. Try again, or start from a city.'
       }
       specimen="Unreadable"

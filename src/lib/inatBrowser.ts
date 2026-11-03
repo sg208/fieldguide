@@ -23,6 +23,7 @@ import {
 // headers: a plain GET stays a CORS simple request (no preflight).
 const getJson = async <T>(url: string): Promise<T> => {
   const response = await fetch(url, {
+    signal: AbortSignal.timeout(8000),
     headers: { Accept: 'application/json' },
   });
   if (response.status === 404) throw notFound();
