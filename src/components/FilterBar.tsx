@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import type { GroupKey } from '../lib/groups';
+import { monthLabel } from '../lib/months';
 import { RADII, type Radius } from '../lib/validation';
 import { GroupTabs } from './GroupTabs';
 
@@ -17,11 +18,6 @@ type Props = {
   currentMonth: number;
   onChange: (patch: FilterPatch) => void;
 };
-
-const monthName = (month: number): string =>
-  new Intl.DateTimeFormat('en', { month: 'long', timeZone: 'UTC' }).format(
-    new Date(Date.UTC(2024, month - 1, 1))
-  );
 
 /** Sticky filter form: group chips, radius scale bar, month switch (HANDOFF 6). */
 export const FilterBar = ({
@@ -103,7 +99,7 @@ export const FilterBar = ({
               }
               className="relative m-0 h-[26px] w-11 flex-none cursor-pointer appearance-none rounded-[13px] border border-edge bg-sheet transition-colors after:absolute after:top-[3px] after:left-[3px] after:size-[18px] after:rounded-full after:bg-edge after:transition-transform after:duration-[180ms] after:ease-settle after:content-[''] checked:border-stamp checked:bg-stamp checked:after:translate-x-[18px] checked:after:bg-on-stamp"
             />
-            <span>{monthName(shownMonth)} only</span>
+            <span>{monthLabel(shownMonth)} only</span>
           </label>
         </div>
       </div>

@@ -9,11 +9,11 @@ export const HeroFigure = (): ReactNode => (
     className="relative m-0 hidden h-[420px] lg:block"
   >
     <SpecimenSheet
-      specimen={HERO_SPECIMENS[0]!}
+      specimen={HERO_SPECIMENS[0]}
       className="absolute top-12 left-0 w-[220px]"
     />
     <SpecimenSheet
-      specimen={HERO_SPECIMENS[1]!}
+      specimen={HERO_SPECIMENS[1]}
       className="absolute top-0 right-0 w-[220px]"
     />
     <figcaption className="absolute bottom-0 left-0 text-xs text-ink-2">

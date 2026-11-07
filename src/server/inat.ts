@@ -16,6 +16,7 @@ import {
   type SpeciesPage,
   type Taxon,
 } from '../lib/inatMap';
+import { CACHE_TTL_SECONDS } from '../lib/cacheTtl';
 import { cached } from './edgeCache';
 import { NotFoundError } from './errors';
 import { fetchJson } from './upstream';
@@ -31,20 +32,17 @@ export type {
   Taxon,
 } from '../lib/inatMap';
 
-const SPECIES_TTL = 6 * 60 * 60;
-const TAXON_TTL = 7 * 24 * 60 * 60;
-
 export const getSpeciesCounts = (
   params: SpeciesCountsParams
 ): Promise<SpeciesPage> => {
   const query = speciesCountsQuery(params);
-  return cached(`inat:species:${query}`, SPECIES_TTL, async () =>
+  return cached(`inat:species:${query}`, CACHE_TTL_SECONDS.species, async () =>
     mapSpeciesPage(await fetchJson<RawSpeciesCounts>(speciesCountsUrl(query)))
   );
 };
 
 export const getTaxon = (id: number): Promise<Taxon> =>
-  cached(`inat:taxon:${id}`, TAXON_TTL, async () => {
+  cached(`inat:taxon:${id}`, CACHE_TTL_SECONDS.taxon, async () => {
     const taxon = mapTaxon(await fetchJson<RawTaxa>(taxonUrl(id)));
     if (!taxon) throw new NotFoundError(`taxon ${id}`);
     return taxon;
@@ -52,7 +50,9 @@ export const getTaxon = (id: number): Promise<Taxon> =>
 
 export const getSightings = (params: SightingsParams): Promise<Sighting[]> => {
   const query = sightingsQuery(params);
-  return cached(`inat:sightings:${query}`, SPECIES_TTL, async () =>
-    mapSightings(await fetchJson<RawSightings>(sightingsUrl(query)))
+  return cached(
+    `inat:sightings:${query}`,
+    CACHE_TTL_SECONDS.species,
+    async () => mapSightings(await fetchJson<RawSightings>(sightingsUrl(query)))
   );
 };

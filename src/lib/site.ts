@@ -1,6 +1,7 @@
 export const SITE_NAME = 'Field Guide';
 export const SITE_URL = 'https://fieldguide.engg.app';
 export const SITE_TAGLINE = 'what lives near any city';
+export const HOME_TITLE = `${SITE_NAME}: ${SITE_TAGLINE}`;
 export const SITE_DESCRIPTION =
   'Pick any city and see the birds, plants, insects and other species people have observed near it, from iNaturalist research-grade records.';
 export const AUTHOR_NAME = 'Syailendra Ginting';

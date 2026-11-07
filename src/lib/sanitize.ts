@@ -61,8 +61,55 @@ const hrefFrom = (attributes: string): string | null => {
   return match?.[1] ?? match?.[2] ?? match?.[3] ?? null;
 };
 
+type SanitizeState = { out: string; rest: string; open: string[] };
+
+const skipWithContent = (state: SanitizeState, name: string): void => {
+  const close = new RegExp(`</${name}\\s*>`, 'i').exec(state.rest);
+  state.rest = close ? state.rest.slice(close.index + close[0].length) : '';
+};
+
+const closeTag = (state: SanitizeState, name: string): void => {
+  const index = state.open.lastIndexOf(name);
+  if (index !== -1) state.out += closeTags(state.open.splice(index));
+};
+
+const openTag = (
+  state: SanitizeState,
+  name: string,
+  attributes: string
+): void => {
+  if (VOID.has(name)) {
+    state.out += `<${name}>`;
+    return;
+  }
+  if (name !== 'a') {
+    state.open.push(name);
+    state.out += `<${name}>`;
+    return;
+  }
+  const href = safeWikipediaUrl(hrefFrom(attributes));
+  if (!href) return;
+  state.open.push(name);
+  state.out += `<a href="${escapeAttribute(href)}" rel="noopener noreferrer">`;
+};
+
+const handleTag = (
+  state: SanitizeState,
+  name: string,
+  isClosing: boolean,
+  attributes: string
+): void => {
+  if (DROP_WITH_CONTENT.has(name) && !isClosing) {
+    skipWithContent(state, name);
+    return;
+  }
+  if (!ALLOWED.has(name)) return;
+  if (isClosing) closeTag(state, name);
+  else openTag(state, name, attributes);
+};
+
 export const sanitizeHtml = (input: string): string => {
-  const state = { out: '', rest: input, open: [] as string[] };
+  const state: SanitizeState = { out: '', rest: input, open: [] };
   while (state.rest.length > 0) {
     const lt = state.rest.indexOf('<');
     if (lt === -1) {
@@ -78,28 +125,8 @@ export const sanitizeHtml = (input: string): string => {
       continue;
     }
     const [whole, slash, rawName = '', attributes = ''] = tag;
-    const name = rawName.toLowerCase();
     state.rest = state.rest.slice(whole.length);
-    if (DROP_WITH_CONTENT.has(name) && !slash) {
-      const close = new RegExp(`</${name}\\s*>`, 'i').exec(state.rest);
-      state.rest = close ? state.rest.slice(close.index + close[0].length) : '';
-    } else if (!ALLOWED.has(name)) {
-      continue;
-    } else if (slash) {
-      const index = state.open.lastIndexOf(name);
-      if (index !== -1) state.out += closeTags(state.open.splice(index));
-    } else if (VOID.has(name)) {
-      state.out += `<${name}>`;
-    } else if (name === 'a') {
-      const href = safeWikipediaUrl(hrefFrom(attributes));
-      if (href) {
-        state.open.push(name);
-        state.out += `<a href="${escapeAttribute(href)}" rel="noopener noreferrer">`;
-      }
-    } else {
-      state.open.push(name);
-      state.out += `<${name}>`;
-    }
+    handleTag(state, rawName.toLowerCase(), Boolean(slash), attributes);
   }
   return state.out + closeTags(state.open);
 };

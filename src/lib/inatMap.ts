@@ -1,4 +1,5 @@
 import type { IconicTaxon } from './groups';
+import { PER_PAGE } from './paging';
 
 // Pure iNaturalist URL builders and response mappers, shared by the Worker
 // (src/server/inat.ts) and the browser fallback (src/lib/inatBrowser.ts).
@@ -125,7 +126,15 @@ export type SpeciesCountsParams = {
 export const speciesCountsQuery = (
   params: SpeciesCountsParams
 ): URLSearchParams => {
-  const { lat, lng, radius, iconicTaxa, month, page, perPage = 30 } = params;
+  const {
+    lat,
+    lng,
+    radius,
+    iconicTaxa,
+    month,
+    page,
+    perPage = PER_PAGE,
+  } = params;
   const query = new URLSearchParams({
     lat: String(lat),
     lng: String(lng),

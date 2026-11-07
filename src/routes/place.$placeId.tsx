@@ -1,19 +1,15 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import {
-  createFileRoute,
-  notFound,
-  redirect,
-  useLocation,
-} from '@tanstack/react-router';
+import { createFileRoute, redirect, useLocation } from '@tanstack/react-router';
 import type { ReactNode } from 'react';
 import { FilterBar, type FilterPatch } from '../components/FilterBar';
 import { PlaceCover } from '../components/place/PlaceCover';
 import { PlaceResults } from '../components/place/PlaceResults';
 import { DEFAULT_GROUP } from '../lib/groups';
+import { totalPagesFor } from '../lib/paging';
+import { requireId } from '../lib/requireId';
 import { SITE_URL, pageTitle } from '../lib/site';
 import {
   DEFAULT_RADIUS,
-  parseId,
   placeSearchSchema,
   type PlaceSearch,
 } from '../lib/validation';
@@ -24,14 +20,6 @@ import type { SpeciesPage } from '../server/inat';
 // Router infers Link `search` from the return type: optional keys keep it
 // optional on every <Link to="/place/$placeId">. Values are always filled.
 type SearchInput = Partial<Record<keyof PlaceSearch, unknown>>;
-
-const PER_PAGE = 30;
-
-const requirePlaceId = (value: string): number => {
-  const id = parseId(value);
-  if (id === null) throw notFound();
-  return id;
-};
 
 // Defaults stay out of the URL (so /place/1 needs no redirect); readers fill
 // them back in with placeSearchSchema.
@@ -49,7 +37,7 @@ export const Route = createFileRoute('/place/$placeId')({
   validateSearch: toUrlSearch,
   loaderDeps: ({ search }) => ({ search }),
   loader: async ({ context, params, deps }) => {
-    const placeId = requirePlaceId(params.placeId);
+    const placeId = requireId(params.placeId);
     const { group, radius, month, page } = placeSearchSchema(deps.search);
     const place = await context.queryClient.ensureQueryData(
       placeQuery(placeId)
@@ -65,7 +53,7 @@ export const Route = createFileRoute('/place/$placeId')({
       // SSR: the species names must be in the HTML and in the dehydrated state.
       const list = await context.queryClient.ensureQueryData(filtered);
       await context.queryClient.prefetchQuery(overall);
-      const lastPage = Math.min(Math.ceil(list.totalResults / PER_PAGE), 10);
+      const lastPage = totalPagesFor(list.totalResults);
       if (page > Math.max(lastPage, 1)) {
         throw redirect({
           to: '/place/$placeId',

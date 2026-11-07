@@ -23,6 +23,23 @@ export const formatPopulation = (population: number): string => {
   return String(population);
 };
 
+export const listStateOf = ({
+  isStale,
+  isPending,
+  isError,
+  count,
+}: {
+  isStale: boolean;
+  isPending: boolean;
+  isError: boolean;
+  count: number;
+}): ListState => {
+  if (isStale || isPending) return 'loading';
+  if (isError) return 'error';
+  if (count === 0) return 'empty';
+  return 'results';
+};
+
 export const statusMessage = (
   state: ListState,
   query: string,

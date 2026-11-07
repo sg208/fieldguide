@@ -12,7 +12,7 @@ import { Header, type HeaderVariant } from '../components/Header';
 import { RouteFocus } from '../components/RouteFocus';
 import { RegisterSW } from '../components/RegisterSW';
 import { NotFound, RouteError } from '../components/RouteStates';
-import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE } from '../lib/site';
+import { HOME_TITLE, SITE_DESCRIPTION, SITE_NAME } from '../lib/site';
 import appCss from '../styles.css?url';
 
 const variantFor = (pathname: string): HeaderVariant => {
@@ -57,7 +57,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       meta: [
         { charSet: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { title: `${SITE_NAME}: ${SITE_TAGLINE}` },
+        { title: HOME_TITLE },
         { name: 'description', content: SITE_DESCRIPTION },
         {
           name: 'theme-color',

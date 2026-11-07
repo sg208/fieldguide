@@ -1,10 +1,9 @@
 import { queryOptions, type UseQueryOptions } from '@tanstack/react-query';
+import { CACHE_TTL_SECONDS, toMilliseconds } from '../lib/cacheTtl';
 import { getPlaceFn, searchPlacesFn } from '../server/fns';
 
-const HOUR_MS = 60 * 60 * 1000;
-// Mirror the server edge-cache TTLs in src/server/geocode.ts
-export const SEARCH_STALE_MS = 24 * HOUR_MS;
-export const PLACE_STALE_MS = 7 * 24 * HOUR_MS;
+export const SEARCH_STALE_MS = toMilliseconds(CACHE_TTL_SECONDS.search);
+export const PLACE_STALE_MS = toMilliseconds(CACHE_TTL_SECONDS.place);
 
 type Result<T extends (...args: never[]) => unknown> = Awaited<ReturnType<T>>;
 

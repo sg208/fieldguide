@@ -1,10 +1,9 @@
+import { CACHE_TTL_SECONDS } from '../lib/cacheTtl';
 import { cached } from './edgeCache';
 import { NotFoundError, UpstreamError } from './errors';
 import { fetchJson } from './upstream';
 
 const BASE = 'https://geocoding-api.open-meteo.com/v1';
-const SEARCH_TTL = 24 * 60 * 60;
-const PLACE_TTL = 7 * 24 * 60 * 60;
 
 export type Place = {
   id: number;
@@ -49,16 +48,20 @@ export const searchPlaces = (name: string): Promise<Place[]> => {
     count: '8',
     language: 'en',
   });
-  return cached(`geo:search:${query.toLowerCase()}`, SEARCH_TTL, async () => {
-    const data = await fetchJson<{ results?: RawPlace[] }>(
-      `${BASE}/search?${params}`
-    );
-    return (data.results ?? []).map(toPlace);
-  });
+  return cached(
+    `geo:search:${query.toLowerCase()}`,
+    CACHE_TTL_SECONDS.search,
+    async () => {
+      const data = await fetchJson<{ results?: RawPlace[] }>(
+        `${BASE}/search?${params}`
+      );
+      return (data.results ?? []).map(toPlace);
+    }
+  );
 };
 
 export const getPlace = (id: number): Promise<Place> =>
-  cached(`geo:place:${id}`, PLACE_TTL, async () => {
+  cached(`geo:place:${id}`, CACHE_TTL_SECONDS.place, async () => {
     const params = new URLSearchParams({ id: String(id), language: 'en' });
     try {
       return toPlace(await fetchJson<RawPlace>(`${BASE}/get?${params}`));

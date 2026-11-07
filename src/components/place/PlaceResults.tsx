@@ -6,11 +6,10 @@ import type { Place } from '../../server/geocode';
 import type { FilterPatch } from '../FilterBar';
 import { Pagination } from '../Pagination';
 import { SpeciesGrid } from '../SpeciesGrid';
-import { EmptyState, ErrorState, groupLabel, monthLabel } from './ResultStates';
+import { EmptyState, ErrorState, groupLabel } from './ResultStates';
+import { monthLabel } from '../../lib/months';
+import { LIST_CAP, PER_PAGE, totalPagesFor } from '../../lib/paging';
 import { isRateLimited } from '../../lib/rateLimit';
-
-const PER_PAGE = 30;
-const LIST_CAP = 300;
 
 type Props = {
   place: Place;
@@ -37,7 +36,7 @@ export const PlaceResults = ({ place, search, onFilter }: Props): ReactNode => {
   }, [isLoading, page]);
 
   const total = query.data?.totalResults ?? 0;
-  const totalPages = Math.min(Math.ceil(total / PER_PAGE), LIST_CAP / PER_PAGE);
+  const totalPages = totalPagesFor(total);
   const first = (page - 1) * PER_PAGE + 1;
   const last = Math.min(first + PER_PAGE - 1, total);
   const heading = `${group === 'all' ? 'All groups' : groupLabel(group)}${

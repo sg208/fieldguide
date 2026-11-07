@@ -9,7 +9,7 @@ type Props = {
   species: CardSpecies[];
   placeId: number;
   radius: Radius;
-  /** Rank of the first card: (page - 1) * 30 + 1. */
+  /** Rank of the first card: (page - 1) * PER_PAGE + 1. */
   startRank: number;
   isLoading: boolean;
 };

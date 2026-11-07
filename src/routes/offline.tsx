@@ -2,17 +2,34 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState, type ReactNode } from 'react';
 import { RetryIcon } from '../components/icons';
 import { SystemPage } from '../components/SystemPage';
+import { PAGES_CACHE } from '../lib/offlinePages';
 import { pageTitle } from '../lib/site';
 
 type SavedPage = { href: string; title: string; kind: string };
-
-const PAGES_CACHE = 'fieldguide-pages-';
 
 const titleOf = (markup: string, isPlace: boolean): string | null => {
   const raw = /<title[^>]*>([^<]*)<\/title>/i.exec(markup)?.[1];
   if (!raw) return null;
   const withoutSite = raw.replace(/\s·\sField Guide$/, '');
   return (isPlace ? withoutSite.split(':')[0] : withoutSite)?.trim() || null;
+};
+
+const toSavedPage = async (
+  cache: Cache,
+  request: Request
+): Promise<SavedPage | null> => {
+  const url = new URL(request.url);
+  const isPlace = url.pathname.startsWith('/place/');
+  if (!isPlace && !url.pathname.startsWith('/species/')) return null;
+  const response = await cache.match(request);
+  const title = response ? titleOf(await response.text(), isPlace) : null;
+  if (!title) return null;
+  const radius = url.searchParams.get('radius') ?? '25';
+  return {
+    href: `${url.pathname}${url.search}`,
+    title,
+    kind: isPlace ? `Place · ${radius} km` : 'Species',
+  };
 };
 
 // Built from Cache Storage at runtime: only place and species pages, newest first.
@@ -24,19 +41,12 @@ const readSavedPages = async (): Promise<SavedPage[]> => {
   const pages: SavedPage[] = [];
   for (const name of names) {
     const cache = await caches.open(name);
-    for (const request of await cache.keys()) {
-      const url = new URL(request.url);
-      const isPlace = url.pathname.startsWith('/place/');
-      if (!isPlace && !url.pathname.startsWith('/species/')) continue;
-      const response = await cache.match(request);
-      const title = response ? titleOf(await response.text(), isPlace) : null;
-      if (!title) continue;
-      const radius = url.searchParams.get('radius') ?? '25';
-      pages.push({
-        href: `${url.pathname}${url.search}`,
-        title,
-        kind: isPlace ? `Place · ${radius} km` : 'Species',
-      });
+    const requests = await cache.keys();
+    const found = await Promise.all(
+      requests.map((request) => toSavedPage(cache, request))
+    );
+    for (const page of found) {
+      if (page) pages.push(page);
     }
   }
   return pages.reverse();

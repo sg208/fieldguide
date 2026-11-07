@@ -119,7 +119,7 @@ export type Specimen = {
 
 const PHOTO_HOST = 'https://inaturalist-open-data.s3.amazonaws.com/photos';
 
-export const HERO_SPECIMENS: readonly Specimen[] = [
+export const HERO_SPECIMENS: readonly [Specimen, Specimen] = [
   {
     photoUrl: `${PHOTO_HOST}/77613552/small.jpg`,
     alt: 'Eastern Cattle-Egret in breeding plumage',

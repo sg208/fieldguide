@@ -8,7 +8,7 @@ const DOCUMENTS = [
   { key: 'credits', to: '/credits', label: 'Credits' },
 ] as const;
 
-export type LegalDocument = (typeof DOCUMENTS)[number]['key'];
+type LegalDocument = (typeof DOCUMENTS)[number]['key'];
 
 type Props = {
   title: string;

@@ -1,25 +1,28 @@
 import { queryOptions, type UseQueryOptions } from '@tanstack/react-query';
+import { CACHE_TTL_SECONDS, toMilliseconds } from '../lib/cacheTtl';
 import { withBrowserFallback } from '../lib/browserFallback';
-import { groupToIconicTaxa, type GroupKey } from '../lib/groups';
+import type { GroupKey } from '../lib/groups';
 import {
   browserSightings,
   browserSpeciesCounts,
   browserTaxon,
 } from '../lib/inatBrowser';
+import {
+  sightingsParams,
+  speciesCountsParams,
+  type SightingsInput,
+  type SpeciesListInput,
+} from '../lib/inatParams';
 import type { Radius } from '../lib/validation';
-import type { SpeciesListInput } from '../server/fns';
 import {
   getPlaceFn,
   getSightingsFn,
   getSpeciesCountsFn,
   getTaxonFn,
-  type SightingsInput,
 } from '../server/fns';
 
-const HOUR_MS = 60 * 60 * 1000;
-// Mirror the server edge-cache TTLs in src/server/inat.ts
-export const SPECIES_STALE_MS = 6 * HOUR_MS;
-export const TAXON_STALE_MS = 7 * 24 * HOUR_MS;
+export const SPECIES_STALE_MS = toMilliseconds(CACHE_TTL_SECONDS.species);
+export const TAXON_STALE_MS = toMilliseconds(CACHE_TTL_SECONDS.taxon);
 
 type Result<T extends (...args: never[]) => unknown> = Awaited<ReturnType<T>>;
 
@@ -45,14 +48,7 @@ export const speciesListQuery = (
         () => getSpeciesCountsFn({ data: input }),
         async () => {
           const place = await getPlaceFn({ data: { placeId: input.placeId } });
-          return browserSpeciesCounts({
-            lat: place.latitude,
-            lng: place.longitude,
-            radius: input.radius,
-            iconicTaxa: groupToIconicTaxa(input.group),
-            month: input.month,
-            page: input.page,
-          });
+          return browserSpeciesCounts(speciesCountsParams(place, input));
         }
       ),
     staleTime: SPECIES_STALE_MS,
@@ -96,12 +92,7 @@ export const sightingsQuery = (
         () => getSightingsFn({ data: input }),
         async () => {
           const place = await getPlaceFn({ data: { placeId: input.placeId } });
-          return browserSightings({
-            taxonId: input.taxonId,
-            lat: place.latitude,
-            lng: place.longitude,
-            radius: input.radius,
-          });
+          return browserSightings(sightingsParams(place, input));
         }
       ),
     staleTime: SPECIES_STALE_MS,

@@ -4,7 +4,7 @@ import { FeaturedCities } from '../components/home/FeaturedCities';
 import { HeroFigure } from '../components/home/HeroFigure';
 import { HowToRead } from '../components/home/HowToRead';
 import { SearchBox } from '../components/SearchBox';
-import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE } from '../lib/site';
+import { HOME_TITLE, SITE_DESCRIPTION } from '../lib/site';
 
 const Home = (): ReactNode => (
   <>
@@ -36,9 +36,9 @@ const Home = (): ReactNode => (
 export const Route = createFileRoute('/')({
   head: () => ({
     meta: [
-      { title: `${SITE_NAME}: ${SITE_TAGLINE}` },
+      { title: HOME_TITLE },
       { name: 'description', content: SITE_DESCRIPTION },
-      { property: 'og:title', content: `${SITE_NAME}: ${SITE_TAGLINE}` },
+      { property: 'og:title', content: HOME_TITLE },
       { property: 'og:description', content: SITE_DESCRIPTION },
     ],
   }),
