@@ -33,6 +33,56 @@ const toUrlSearch = (input: SearchInput): Partial<PlaceSearch> => {
   };
 };
 
+const PlacePage = (): ReactNode => {
+  const { place } = Route.useLoaderData();
+  const search = placeSearchSchema(Route.useSearch());
+  const navigate = Route.useNavigate();
+  const location = useLocation();
+  const overall = useQuery({
+    ...speciesListQuery({
+      placeId: place.id,
+      group: 'all',
+      radius: search.radius,
+      page: 1,
+    }),
+    placeholderData: keepPreviousData,
+  });
+
+  const handleFilter = (patch: FilterPatch): void => {
+    void navigate({
+      search: (previous) => ({ ...previous, ...patch, page: 1 }),
+      resetScroll: false,
+    });
+  };
+
+  return (
+    <>
+      <a className="skip" href="#results">
+        Skip to species
+      </a>
+      <PlaceCover
+        place={place}
+        radius={search.radius}
+        speciesCount={
+          overall.isPlaceholderData ? undefined : overall.data?.totalResults
+        }
+        shareUrl={`${SITE_URL}${location.pathname}${location.searchStr}`}
+      />
+      <div className="mt-5">
+        {/* UTC so the server HTML and the client agree on the month label. */}
+        <FilterBar
+          group={search.group}
+          radius={search.radius}
+          month={search.month}
+          currentMonth={new Date().getUTCMonth() + 1}
+          onChange={handleFilter}
+        />
+      </div>
+      <PlaceResults place={place} search={search} onFilter={handleFilter} />
+    </>
+  );
+};
+
 export const Route = createFileRoute('/place/$placeId')({
   validateSearch: toUrlSearch,
   loaderDeps: ({ search }) => ({ search }),
@@ -95,52 +145,3 @@ export const Route = createFileRoute('/place/$placeId')({
   },
   component: PlacePage,
 });
-
-function PlacePage(): ReactNode {
-  const { place } = Route.useLoaderData();
-  const search = placeSearchSchema(Route.useSearch());
-  const navigate = Route.useNavigate();
-  const location = useLocation();
-  const overall = useQuery({
-    ...speciesListQuery({
-      placeId: place.id,
-      group: 'all',
-      radius: search.radius,
-      page: 1,
-    }),
-    placeholderData: keepPreviousData,
-  });
-
-  const handleFilter = (patch: FilterPatch): void => {
-    void navigate({
-      search: (previous) => ({ ...previous, ...patch, page: 1 }),
-      resetScroll: false,
-    });
-  };
-
-  return (
-    <>
-      <a className="skip" href="#results">
-        Skip to species
-      </a>
-      <PlaceCover
-        place={place}
-        radius={search.radius}
-        speciesCount={
-          overall.isPlaceholderData ? undefined : overall.data?.totalResults
-        }
-        shareUrl={`${SITE_URL}${location.pathname}${location.searchStr}`}
-      />
-      <div className="mt-5">
-        <FilterBar
-          group={search.group}
-          radius={search.radius}
-          month={search.month}
-          currentMonth={new Date().getMonth() + 1}
-          onChange={handleFilter}
-        />
-      </div>
-      <PlaceResults place={place} search={search} onFilter={handleFilter} />
-    </>
-  );
-}

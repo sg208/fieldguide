@@ -26,6 +26,12 @@ export const PlaceResults = ({ place, search, onFilter }: Props): ReactNode => {
   });
   const headingRef = useRef<HTMLHeadingElement>(null);
   const shouldFocusRef = useRef(false);
+  // Empty-state buttons unmount themselves; move focus to the results heading
+  // once the new list lands.
+  const handleStateFilter = (patch: FilterPatch): void => {
+    shouldFocusRef.current = true;
+    onFilter(patch);
+  };
 
   const isLoading = query.isPending || query.isPlaceholderData;
   useEffect(() => {
@@ -33,7 +39,7 @@ export const PlaceResults = ({ place, search, onFilter }: Props): ReactNode => {
     shouldFocusRef.current = false;
     headingRef.current?.focus();
     headingRef.current?.scrollIntoView({ block: 'start' });
-  }, [isLoading, page]);
+  }, [isLoading, page, group, radius, month]);
 
   const total = query.data?.totalResults ?? 0;
   const totalPages = totalPagesFor(total);
@@ -77,9 +83,9 @@ export const PlaceResults = ({ place, search, onFilter }: Props): ReactNode => {
           group={group}
           radius={radius}
           month={month}
-          onWiden={(next) => onFilter({ radius: next })}
-          onAllMonths={() => onFilter({ month: undefined })}
-          onAllGroups={() => onFilter({ group: 'all' })}
+          onWiden={(next) => handleStateFilter({ radius: next })}
+          onAllMonths={() => handleStateFilter({ month: undefined })}
+          onAllGroups={() => handleStateFilter({ group: 'all' })}
         />
       ) : (
         <>

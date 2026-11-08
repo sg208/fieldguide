@@ -4,11 +4,13 @@ import { ExternalLinkIcon } from './icons';
 
 type Props = { city: string; radius: number; sightings: Sighting[] };
 
+// WHY: SSR (workerd) and the browser must print the same string or hydration
+// fails; 'en-GB' gives HANDOFF's "13 May 2026". See src/lib/months.ts.
 const formatDate = (value: string | null): string => {
   if (!value) return 'Date unknown';
   const date = new Date(`${value}T00:00:00Z`);
   if (Number.isNaN(date.getTime())) return 'Date unknown';
-  return new Intl.DateTimeFormat(undefined, {
+  return new Intl.DateTimeFormat('en-GB', {
     day: 'numeric',
     month: 'short',
     year: 'numeric',

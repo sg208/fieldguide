@@ -38,6 +38,11 @@ export const SightingsSection = ({
       </section>
     );
   }
-  if (!data) return <p className="mt-12 text-ink-2">Loading sightings…</p>;
+  if (!data)
+    return (
+      <p role="status" className="mt-12 text-ink-2">
+        Loading sightings…
+      </p>
+    );
   return <SightingList city={city} radius={radius} sightings={data} />;
 };

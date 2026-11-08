@@ -42,9 +42,7 @@ describe('SightingList', () => {
         ]}
       />
     );
-    expect(
-      screen.getByText(/^(May 13, 2026|13 May 2026)$/)
-    ).toBeInTheDocument();
+    expect(screen.getByText('13 May 2026')).toBeInTheDocument();
     expect(screen.getByText('No place name given')).toBeInTheDocument();
     expect(screen.getByText('henke911')).toBeInTheDocument();
     expect(

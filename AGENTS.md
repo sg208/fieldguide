@@ -1,7 +1,7 @@
 # AGENTS.md
 
 - PROJECT: fieldguide — what lives near any city, from iNaturalist research-grade observations; TanStack Start + TanStack Query SSR on a Cloudflare Worker (`README.md:3`)
-- STATUS: v0.1.0 built on `develop`; deploy target https://fieldguide.engg.app (sg208 account, from `main` only)
+- STATUS: v0.1.2 built on `develop`; deploy target https://fieldguide.engg.app (sg208 account, from `main` only)
 - LEARNINGS: `.enggflo/learning.md` · DECISIONS: `.enggflo/brain.md`
 
 ## Commands

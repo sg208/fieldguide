@@ -38,7 +38,8 @@ const SpeciesPage = (): ReactNode => {
     ? sanitizeHtml(taxon.wikipediaSummary)
     : null;
   const wikipedia = safeWikipediaUrl(taxon.wikipediaUrl);
-  const shareUrl = `${SITE_URL}/species/${id}${placeId ? `?place=${placeId}&radius=${radius}` : ''}`;
+  const placeSearch = placeId ? `?place=${placeId}&radius=${radius}` : '';
+  const shareUrl = `${SITE_URL}/species/${id}${placeSearch}`;
 
   return (
     <div className="wrap pb-4">
@@ -125,6 +126,7 @@ export const Route = createFileRoute('/species/$taxonId')({
       stripTags(taxon.wikipediaSummary ?? '').slice(0, 200) ||
       `${name} (${taxon.name}): photos, lineage and recent sightings from iNaturalist research-grade observations.`;
     const image = taxon.photos[0]?.mediumUrl;
+    const canonicalUrl = `${SITE_URL}/species/${taxon.id}`;
     return {
       meta: [
         { title: pageTitle(title) },
@@ -132,7 +134,10 @@ export const Route = createFileRoute('/species/$taxonId')({
         { property: 'og:title', content: pageTitle(title) },
         { property: 'og:description', content: description },
         ...(image ? [{ property: 'og:image', content: image }] : []),
+        { property: 'og:url', content: canonicalUrl },
       ],
+      // Canonical drops ?place=: the place-less page is the stable one.
+      links: [{ rel: 'canonical', href: canonicalUrl }],
     };
   },
   component: SpeciesPage,

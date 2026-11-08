@@ -36,7 +36,7 @@ describe('SightingsSection', () => {
   it('shows a loading line while sightings load', async () => {
     serverFns.getSightingsFn.mockReturnValue(new Promise(() => {}));
     await renderWithProviders(<SightingsSection {...props} />);
-    expect(screen.getByText('Loading sightings…')).toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent('Loading sightings…');
   });
 
   it('lists sightings once loaded', async () => {
