@@ -34,7 +34,13 @@ const readEntry = async <T>(
   key: string
 ): Promise<Entry<T> | null> => {
   const response = await cache.match(toRequest(key));
-  return response ? ((await response.json()) as Entry<T>) : null;
+  if (!response) return null;
+  try {
+    return (await response.json()) as Entry<T>;
+  } catch {
+    // A truncated or foreign body is treated as a miss, not a 500.
+    return null;
+  }
 };
 
 const writeEntry = async <T>(

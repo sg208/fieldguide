@@ -19,6 +19,8 @@ The build writes the client bundle and the Worker to `dist/`. It makes no networ
 pnpm run deploy   # pnpm build, then wrangler deploy
 ```
 
+`pnpm build` also writes `.wrangler/deploy/config.json`, which points wrangler at `dist/server/wrangler.json` (the built Worker plus `dist/client` as static assets). Run `wrangler deploy` right after the build, from the same checkout.
+
 Requirements:
 
 - `wrangler` v4, installed as a dev dependency by `pnpm install`

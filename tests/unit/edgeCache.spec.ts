@@ -35,6 +35,19 @@ describe('cached', () => {
     expect(cache.store.size).toBe(1);
   });
 
+  it('treats an unreadable stored entry as a miss', async () => {
+    const cache = createFakeCache();
+    await cached('place:1', 60, async () => 'first', { cache });
+    const [storedKey] = [...cache.store.keys()];
+    cache.store.set(storedKey ?? '', new Response('{broken'));
+    const fetcher = vi.fn(async () => 'second');
+
+    const value = await cached('place:1', 60, fetcher, { cache });
+
+    expect(value).toBe('second');
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
   it('versions the cache key so a new data shape never reads an old entry', async () => {
     const cache = createFakeCache();
     await cached('place:1', 60, async () => 'v', { cache });

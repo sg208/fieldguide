@@ -1,14 +1,18 @@
 import { notFound } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
-import { groupToIconicTaxa, type GroupKey } from '../lib/groups';
+import {
+  sightingsParams,
+  speciesCountsParams,
+  type SightingsInput,
+  type SpeciesListInput,
+} from '../lib/inatParams';
 import {
   parseGroup,
-  parseId,
   parseMonth,
   parsePage,
   parseRadius,
-  type Radius,
 } from '../lib/validation';
+import { requireId } from '../lib/requireId';
 import { NotFoundError } from './errors';
 import { getPlace, searchPlaces } from './geocode';
 import { getSightings, getSpeciesCounts, getTaxon } from './inat';
@@ -17,13 +21,6 @@ const asRecord = (input: unknown): Record<string, unknown> =>
   typeof input === 'object' && input !== null
     ? (input as Record<string, unknown>)
     : {};
-
-// An id that is not a positive integer can never exist: answer 404, not 500.
-const requireId = (value: unknown): number => {
-  const id = parseId(value);
-  if (id === null) throw notFound();
-  return id;
-};
 
 export const validateSearchQuery = (input: unknown): { query: string } => {
   const { query } = asRecord(input);
@@ -42,14 +39,6 @@ export const validateTaxonId = (input: unknown): { taxonId: number } => ({
   taxonId: requireId(asRecord(input).taxonId),
 });
 
-export type SpeciesListInput = {
-  placeId: number;
-  group: GroupKey;
-  radius: Radius;
-  month?: number;
-  page: number;
-};
-
 // Coordinates are never read from the client; the place id is resolved server-side.
 export const validateSpeciesListInput = (input: unknown): SpeciesListInput => {
   const raw = asRecord(input);
@@ -60,12 +49,6 @@ export const validateSpeciesListInput = (input: unknown): SpeciesListInput => {
     month: parseMonth(raw.month),
     page: parsePage(raw.page),
   };
-};
-
-export type SightingsInput = {
-  taxonId: number;
-  placeId: number;
-  radius: Radius;
 };
 
 export const validateSightingsInput = (input: unknown): SightingsInput => {
@@ -103,14 +86,7 @@ export const getSpeciesCountsFn = createServerFn()
   .handler(({ data }) =>
     withNotFound(async () => {
       const place = await getPlace(data.placeId);
-      return getSpeciesCounts({
-        lat: place.latitude,
-        lng: place.longitude,
-        radius: data.radius,
-        iconicTaxa: groupToIconicTaxa(data.group),
-        month: data.month,
-        page: data.page,
-      });
+      return getSpeciesCounts(speciesCountsParams(place, data));
     })()
   );
 
@@ -123,11 +99,6 @@ export const getSightingsFn = createServerFn()
   .handler(({ data }) =>
     withNotFound(async () => {
       const place = await getPlace(data.placeId);
-      return getSightings({
-        taxonId: data.taxonId,
-        lat: place.latitude,
-        lng: place.longitude,
-        radius: data.radius,
-      });
+      return getSightings(sightingsParams(place, data));
     })()
   );

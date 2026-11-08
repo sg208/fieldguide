@@ -1,5 +1,6 @@
-import type { SpeciesListInput } from '../../src/server/fns';
+import type { SpeciesListInput } from '../../src/lib/inatParams';
 import { describe, expect, it } from 'vitest';
+import { CACHE_TTL_SECONDS } from '../../src/lib/cacheTtl';
 import {
   placeQuery,
   placeSearchQuery,
@@ -29,6 +30,15 @@ describe('query options', () => {
     expect(placeQuery(1).staleTime).toBe(7 * 24 * hour);
     expect(taxonQuery(1).staleTime).toBe(7 * 24 * hour);
     expect(placeSearchQuery('Lon').staleTime).toBe(24 * hour);
+  });
+
+  it('server cache TTLs are 6h, 7d, 7d, 1d in seconds', () => {
+    expect(CACHE_TTL_SECONDS).toEqual({
+      species: 21600,
+      taxon: 604800,
+      place: 604800,
+      search: 86400,
+    });
   });
 
   it('placeSearchQuery and placeQuery keys are stable', () => {

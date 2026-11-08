@@ -1,5 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { PAGES_CACHE } from '../../src/lib/offlinePages';
+import { PHOTO_HOSTS } from '../../src/lib/securityHeaders';
 
 type Req = { url: string; method: string; mode: string };
 type Handler = (event: Record<string, unknown>) => void;
@@ -235,5 +237,18 @@ describe('service worker', () => {
     expect(sw.store.has('fieldguide-shell-v0')).toBe(false);
     expect(sw.store.has('unrelated')).toBe(false);
     for (const name of current) expect(sw.store.has(name)).toBe(true);
+  });
+});
+
+describe('service worker sync points with the app', () => {
+  it('names its pages cache with the prefix /offline reads', () => {
+    expect(SOURCE).toContain(`\`${PAGES_CACHE}\${VERSION}\``);
+  });
+
+  it('caches only photo hosts the CSP img-src allows', () => {
+    const block = /const PHOTO_HOSTS = \[([^\]]*)\]/.exec(SOURCE)?.[1] ?? '';
+    const swHosts = [...block.matchAll(/'([^']+)'/g)].map((match) => match[1]);
+    expect(swHosts.length).toBeGreaterThan(0);
+    for (const host of swHosts) expect(PHOTO_HOSTS).toContain(host);
   });
 });

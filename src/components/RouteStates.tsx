@@ -3,7 +3,7 @@ import {
   useRouter,
   type ErrorComponentProps,
 } from '@tanstack/react-router';
-import { useEffect, type ReactNode } from 'react';
+import { useCallback, useEffect, type ReactNode } from 'react';
 import { isRateLimited } from '../lib/rateLimit';
 import { RetryIcon, SearchIcon } from './icons';
 import { SystemPage } from './SystemPage';
@@ -34,30 +34,29 @@ export const NotFound = (): ReactNode => (
   />
 );
 
-/** 500 (HANDOFF 8.5). The error object is never shown: it may carry upstream detail. */
 // A busy page retries once by itself: on the client the loaders re-run and the
 // queries fall back to asking iNaturalist from the browser. The timestamp
 // keeps a still-busy retry from looping.
 const AUTO_RETRY_GAP_MS = 30_000;
 const autoRetry = { lastAt: 0 };
 
+/** 500 (HANDOFF 8.5). The error object is never shown: it may carry upstream detail. */
 export const RouteError = ({
   error,
   reset,
 }: ErrorComponentProps): ReactNode => {
   const router = useRouter();
   const isBusy = isRateLimited(error);
-  const handleRetry = (): void => {
+  const retryLoad = useCallback((): void => {
     reset();
     void router.invalidate();
-  };
+  }, [reset, router]);
 
   useEffect((): void => {
     if (!isBusy || Date.now() - autoRetry.lastAt < AUTO_RETRY_GAP_MS) return;
     autoRetry.lastAt = Date.now();
-    reset();
-    void router.invalidate();
-  }, [isBusy, reset, router]);
+    retryLoad();
+  }, [isBusy, retryLoad]);
   return (
     <SystemPage
       title={isBusy ? 'iNaturalist is busy' : 'Something went wrong'}
@@ -72,11 +71,7 @@ export const RouteError = ({
       icon="alert"
       actions={
         <>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={handleRetry}
-          >
+          <button type="button" className="btn btn-primary" onClick={retryLoad}>
             <RetryIcon />
             Try again
           </button>

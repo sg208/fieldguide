@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { buildSecurityHeaders } from '../../src/lib/securityHeaders';
+import {
+  PHOTO_HOSTS,
+  buildSecurityHeaders,
+} from '../../src/lib/securityHeaders';
 
 describe('buildSecurityHeaders', () => {
   const headers = buildSecurityHeaders();
@@ -32,5 +35,13 @@ describe('buildSecurityHeaders', () => {
     expect(csp).toContain("frame-ancestors 'none'");
     expect(csp).toContain("manifest-src 'self'");
     expect(csp).toContain("worker-src 'self'");
+  });
+
+  it('builds img-src from PHOTO_HOSTS', () => {
+    const csp = headers['Content-Security-Policy-Report-Only'] ?? '';
+    const imgSrc = csp.split('; ').find((part) => part.startsWith('img-src'));
+    expect(imgSrc).toBe(
+      `img-src 'self' data: ${PHOTO_HOSTS.map((host) => `https://${host}`).join(' ')}`
+    );
   });
 });

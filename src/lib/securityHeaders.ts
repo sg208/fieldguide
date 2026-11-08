@@ -1,6 +1,14 @@
+// Keep PHOTO_HOSTS in public/sw.js and the img-src in public/_headers in sync.
+export const PHOTO_HOSTS = [
+  'inaturalist-open-data.s3.amazonaws.com',
+  'static.inaturalist.org',
+] as const;
+
+const photoSources = PHOTO_HOSTS.map((host) => `https://${host}`).join(' ');
+
 const CSP_REPORT_ONLY = [
   "default-src 'self'",
-  "img-src 'self' data: https://inaturalist-open-data.s3.amazonaws.com https://static.inaturalist.org",
+  `img-src 'self' data: ${photoSources}`,
   "connect-src 'self' https://api.inaturalist.org",
   "script-src 'self' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline'",

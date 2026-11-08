@@ -6,9 +6,9 @@ import { placeSearchQuery } from '../queries/places';
 import { CloseIcon, SearchIcon } from './icons';
 import {
   PlaceResultList,
+  listStateOf,
   optionId,
   statusMessage,
-  type ListState,
 } from './PlaceResultList';
 
 const DEBOUNCE_MS = 250; // WHY: HANDOFF §CityCombobox, one request per pause in typing
@@ -29,14 +29,12 @@ export const SearchBox = (): ReactNode => {
   const places = search.data ?? [];
 
   const isShown = isOpen && query.length >= MIN_CHARS;
-  const state: ListState =
-    debounced !== query || search.isPending
-      ? 'loading'
-      : search.isError
-        ? 'error'
-        : places.length === 0
-          ? 'empty'
-          : 'results';
+  const state = listStateOf({
+    isStale: debounced !== query,
+    isPending: search.isPending,
+    isError: search.isError,
+    count: places.length,
+  });
   const hasActive = isShown && state === 'results' && activeIndex >= 0;
 
   const close = (): void => {

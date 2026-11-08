@@ -1,25 +1,9 @@
 import type { ReactNode } from 'react';
 import { GROUPS, type GroupKey } from '../../lib/groups';
 import type { Radius } from '../../lib/validation';
+import { monthLabel } from '../../lib/months';
 import { REPO_URL } from '../../lib/site';
 import { RetryIcon } from '../icons';
-
-const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-] as const;
-
-export const monthLabel = (month: number): string => MONTHS[month - 1] ?? '';
 
 const NEXT_RADIUS: Record<Radius, Radius | null> = { 10: 25, 25: 50, 50: null };
 

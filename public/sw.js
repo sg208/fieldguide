@@ -2,6 +2,7 @@
 // invalidate every cache. Never caches /_serverFn/* or non-GET requests.
 const VERSION = 'v1';
 const SHELL = `fieldguide-shell-${VERSION}`;
+// Prefix must match PAGES_CACHE in src/lib/offlinePages.ts (tests/unit/sw.spec.ts pins it).
 const PAGES = `fieldguide-pages-${VERSION}`;
 const ASSETS = `fieldguide-assets-${VERSION}`;
 const PHOTOS = `fieldguide-photos-${VERSION}`;
@@ -13,6 +14,7 @@ const PRECACHE = [
   '/icons/icon-192.png',
   '/icons/icon-512.png',
 ];
+// Must stay within PHOTO_HOSTS in src/lib/securityHeaders.ts (CSP img-src).
 const PHOTO_HOSTS = [
   'inaturalist-open-data.s3.amazonaws.com',
   'static.inaturalist.org',

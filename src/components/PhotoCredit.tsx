@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-export type ParsedAttribution =
+type ParsedAttribution =
   | { kind: 'licensed'; name: string; licence: string }
   | { kind: 'reserved'; name: string }
   | { kind: 'public-domain'; licence: string }
@@ -51,7 +51,6 @@ export const PhotoCredit = ({
   className,
 }: Props): ReactNode => {
   if (attribution.trim() === '') return null;
-  const parsed = parseAttribution(attribution);
 
   if (variant === 'full') {
     return (
@@ -61,6 +60,7 @@ export const PhotoCredit = ({
     );
   }
 
+  const parsed = parseAttribution(attribution);
   return (
     <div className={`grid gap-0.5 ${className ?? ''}`}>
       <CaptionRow>Photo</CaptionRow>

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { LABEL_SPECIMEN } from '../../lib/featured';
 import { PhotoCredit } from '../PhotoCredit';
-import { attributionOf } from './SpecimenSheet';
+import { SpecimenNames, SpecimenPhoto, attributionOf } from './SpecimenSheet';
 
 const KEY: readonly { term: string; detail: string }[] = [
   {
@@ -39,21 +39,9 @@ export const HowToRead = (): ReactNode => (
         aria-label={`Example label: ${LABEL_SPECIMEN.commonName}`}
         className="overflow-hidden rounded-sheet bg-sheet shadow-sheet"
       >
-        <img
-          src={LABEL_SPECIMEN.photoUrl}
-          width={240}
-          height={240}
-          alt={LABEL_SPECIMEN.alt}
-          loading="lazy"
-          className="aspect-square w-full bg-rule object-cover"
-        />
+        <SpecimenPhoto specimen={LABEL_SPECIMEN} />
         <div className="border-t border-rule px-3 pt-2.5 pb-3">
-          <p className="font-semibold leading-tight [font-stretch:87%]">
-            {LABEL_SPECIMEN.commonName}
-          </p>
-          <p className="sci text-sm text-ink-2" lang="la">
-            {LABEL_SPECIMEN.scientificName}
-          </p>
+          <SpecimenNames specimen={LABEL_SPECIMEN} />
           <p className="mt-2 flex justify-between gap-2 border-t border-rule pt-1.5 text-xs">
             <span>
               <span className="mono">15</span> obs.

@@ -6,11 +6,10 @@ import type { Place } from '../../server/geocode';
 import type { FilterPatch } from '../FilterBar';
 import { Pagination } from '../Pagination';
 import { SpeciesGrid } from '../SpeciesGrid';
-import { EmptyState, ErrorState, groupLabel, monthLabel } from './ResultStates';
+import { EmptyState, ErrorState, groupLabel } from './ResultStates';
+import { monthLabel } from '../../lib/months';
+import { LIST_CAP, PER_PAGE, totalPagesFor } from '../../lib/paging';
 import { isRateLimited } from '../../lib/rateLimit';
-
-const PER_PAGE = 30;
-const LIST_CAP = 300;
 
 type Props = {
   place: Place;
@@ -27,6 +26,12 @@ export const PlaceResults = ({ place, search, onFilter }: Props): ReactNode => {
   });
   const headingRef = useRef<HTMLHeadingElement>(null);
   const shouldFocusRef = useRef(false);
+  // Empty-state buttons unmount themselves; move focus to the results heading
+  // once the new list lands.
+  const handleStateFilter = (patch: FilterPatch): void => {
+    shouldFocusRef.current = true;
+    onFilter(patch);
+  };
 
   const isLoading = query.isPending || query.isPlaceholderData;
   useEffect(() => {
@@ -34,10 +39,10 @@ export const PlaceResults = ({ place, search, onFilter }: Props): ReactNode => {
     shouldFocusRef.current = false;
     headingRef.current?.focus();
     headingRef.current?.scrollIntoView({ block: 'start' });
-  }, [isLoading, page]);
+  }, [isLoading, page, group, radius, month]);
 
   const total = query.data?.totalResults ?? 0;
-  const totalPages = Math.min(Math.ceil(total / PER_PAGE), LIST_CAP / PER_PAGE);
+  const totalPages = totalPagesFor(total);
   const first = (page - 1) * PER_PAGE + 1;
   const last = Math.min(first + PER_PAGE - 1, total);
   const heading = `${group === 'all' ? 'All groups' : groupLabel(group)}${
@@ -78,9 +83,9 @@ export const PlaceResults = ({ place, search, onFilter }: Props): ReactNode => {
           group={group}
           radius={radius}
           month={month}
-          onWiden={(next) => onFilter({ radius: next })}
-          onAllMonths={() => onFilter({ month: undefined })}
-          onAllGroups={() => onFilter({ group: 'all' })}
+          onWiden={(next) => handleStateFilter({ radius: next })}
+          onAllMonths={() => handleStateFilter({ month: undefined })}
+          onAllGroups={() => handleStateFilter({ group: 'all' })}
         />
       ) : (
         <>
